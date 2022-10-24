@@ -8,6 +8,8 @@ public class Achievement {
     private String name;
     private String description = "";
 
+    private boolean isDone = false;
+
     public Achievement(Date start, String name){
         this.start = start;
         this.name = name;
@@ -42,5 +44,9 @@ public class Achievement {
 
     public String getDescription(){
         return description;
+    }
+
+    public void done(){
+        isDone = true;
     }
 }

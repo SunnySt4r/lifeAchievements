@@ -20,6 +20,11 @@ public class Challenge extends Achievement{
         this.distance = distance;
     }
 
+    public Challenge(Date start, Date end, String name, String description, int distance, boolean autoPass) {
+        this(start, end, name, description, distance);
+        this.autoPass = autoPass;
+    }
+
     public int getDistance() {
         return distance;
     }
@@ -40,4 +45,16 @@ public class Challenge extends Achievement{
         return attempt;
     }
 
+    public void fail(){
+        attempt++;
+        if(record < currentStreak){
+            record = currentStreak;
+        }
+        currentStreak = 0;
+        //setEnd(today + distance)
+    }
+
+    public void pass(){
+        currentStreak++;
+    }
 }
