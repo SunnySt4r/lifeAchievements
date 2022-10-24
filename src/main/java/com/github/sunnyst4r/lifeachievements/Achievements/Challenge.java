@@ -4,11 +4,11 @@ import java.util.Date;
 
 public class Challenge extends Achievement{
 
-    int distance;
-    int currentStreak = 0;
-    int record = 0;
-    boolean autoPass = true;
-    int attempt = 1;
+    private int distance;
+    private int currentStreak = 0;
+    private int record = 0;
+    private boolean autoPass = true;
+    private int attempt = 1;
 
     public Challenge(Date start, Date end, String name, int distance) {
         super(start, end, name);
@@ -20,5 +20,24 @@ public class Challenge extends Achievement{
         this.distance = distance;
     }
 
+    public int getDistance() {
+        return distance;
+    }
+
+    public int getCurrentStreak() {
+        return currentStreak;
+    }
+
+    public int getRecord() {
+        return record;
+    }
+
+    public boolean isAutoPass() {
+        return autoPass;
+    }
+
+    public int getAttempt() {
+        return attempt;
+    }
 
 }

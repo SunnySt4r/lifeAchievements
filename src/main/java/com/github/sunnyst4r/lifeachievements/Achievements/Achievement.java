@@ -3,10 +3,10 @@ package com.github.sunnyst4r.lifeachievements.Achievements;
 import java.util.Date;
 
 public class Achievement {
-    Date start;
-    Date end = null;
-    String name;
-    String description = "";
+    private Date start;
+    private Date end = null;
+    private String name;
+    private String description = "";
 
     public Achievement(Date start, String name){
         this.start = start;
@@ -26,5 +26,21 @@ public class Achievement {
     public Achievement(Date start, Date end, String name, String description){
         this(start, name, description);
         this.end = end;
+    }
+
+    public Date getStart(){
+        return start;
+    }
+
+    public Date getEnd(){
+        return end;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public String getDescription(){
+        return description;
     }
 }
