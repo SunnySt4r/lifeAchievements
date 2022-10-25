@@ -57,4 +57,9 @@ public class Challenge extends Achievement{
     public void pass(){
         currentStreak++;
     }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

@@ -49,4 +49,9 @@ public class Achievement {
     public void done(){
         isDone = true;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }
