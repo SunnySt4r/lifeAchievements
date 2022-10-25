@@ -1,27 +1,44 @@
 package com.github.sunnyst4r.lifeachievements.Achievements;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class Challenge extends Achievement{
 
+    private Date start;
     private int distance;
     private int currentStreak = 0;
     private int record = 0;
     private boolean autoPass = true;
     private int attempt = 1;
 
-    public Challenge(Date start, Date end, String name, int distance) {
-        super(start, end, name);
+    public Challenge(Date creationDate, String name, int distance) {
+        super(creationDate, name);
         this.distance = distance;
     }
 
-    public Challenge(Date start, Date end, String name, String description, int distance) {
-        super(start, end, name, description);
+    public Challenge(Date creationDate, String name, String description, int distance) {
+        super(creationDate, name, description);
         this.distance = distance;
     }
 
-    public Challenge(Date start, Date end, String name, String description, int distance, boolean autoPass) {
-        this(start, end, name, description, distance);
+    public Challenge(Date creationDate, String name, String description, int distance, boolean autoPass) {
+        this(creationDate, name, description, distance);
+        this.autoPass = autoPass;
+    }
+
+    public Challenge(Date creationDate, Date end, String name, int distance) {
+        super(creationDate, end, name);
+        this.distance = distance;
+    }
+
+    public Challenge(Date creationDate, Date end, String name, String description, int distance) {
+        super(creationDate, end, name, description);
+        this.distance = distance;
+    }
+
+    public Challenge(Date creationDate, Date end, String name, String description, int distance, boolean autoPass) {
+        this(creationDate, end, name, description, distance);
         this.autoPass = autoPass;
     }
 
@@ -51,7 +68,13 @@ public class Challenge extends Achievement{
             record = currentStreak;
         }
         currentStreak = 0;
-        //setEnd(today + distance)
+        start = new Date();
+        Calendar c = Calendar.getInstance();
+        c.setTime(start);
+        c.add(Calendar.DATE, distance);
+        if(c.getTime().after(getEnd())){
+            System.out.println("Вы не сможете уложиться до конечного дня.\n Переставить конечный день?");
+        }
     }
 
     public void pass(){

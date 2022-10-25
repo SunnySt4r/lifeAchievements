@@ -27,7 +27,7 @@ public class LifeAchievementsController implements Initializable {
         Achievement category1_1 = new Achievement(Calendar.getInstance().getTime(), "1.1");
         Achievement achievement1 = new Achievement(Calendar.getInstance().getTime(), "сделать дела");
         Achievement achievement2 = new Achievement(Calendar.getInstance().getTime(), "написать программу");
-        Challenge challenge = new Challenge(Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), "челендж 1", 100);
+        Challenge challenge = new Challenge(Calendar.getInstance().getTime(), "челендж 1", 100);
 
         TreeItem<Achievement> rootItem = new TreeItem<>(root);
         TreeItem<Achievement> categoryItem1 = new TreeItem<>(category1);
