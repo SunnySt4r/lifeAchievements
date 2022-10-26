@@ -9,9 +9,8 @@ import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.TextFieldTreeCell;
-import javafx.scene.control.cell.TextFieldTreeTableCell;
 import javafx.scene.input.*;
-import javafx.util.StringConverter;
+import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
 import java.util.Calendar;
@@ -23,7 +22,15 @@ public class LifeAchievementsController implements Initializable {
     private TreeCell<Achievement> treeCell;
     private TreeCell<Achievement> source;
     @FXML
-    private Label name;
+    private AnchorPane achievementPanel;
+    @FXML
+    private AnchorPane categoryPanel;
+    @FXML
+    private Label nameAchievement;
+    @FXML
+    private Label nameCategory;
+    @FXML
+    private Label countAchievements;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -98,14 +105,23 @@ public class LifeAchievementsController implements Initializable {
         TreeItem<Achievement> item = treeView.getSelectionModel().getSelectedItem();
         if(item != null){
             if(item.isLeaf()){
+                categoryPanel.setOpacity(0);
+                categoryPanel.setDisable(true);
+                achievementPanel.setOpacity(1);
+                achievementPanel.setDisable(false);
                 if(item.getValue() instanceof Challenge){
-                    name.setText(((Challenge) item.getValue()).getDistance() + "");
+                    nameAchievement.setText(((Challenge) item.getValue()).getDistance() + "");
                 }else{
-                    name.setText(item.getValue().toString());
+                    nameAchievement.setText(item.getValue().toString());
                 }
             }else{
+                achievementPanel.setOpacity(0);
+                achievementPanel.setDisable(true);
+                categoryPanel.setOpacity(1);
+                categoryPanel.setDisable(false);
                 int size = checkChildren(item);
-                name.setText("Категория: " + item.getValue() + " Количество ачивок: " + size);
+                nameCategory.setText(item.getValue().toString());
+                countAchievements.setText(String.valueOf(size));
             }
         }
     }
