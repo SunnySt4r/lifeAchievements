@@ -5,8 +5,13 @@ import com.github.sunnyst4r.lifeachievements.Achievements.Challenge;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.control.cell.TextFieldTreeCell;
+import javafx.scene.control.cell.TextFieldTreeTableCell;
+import javafx.scene.input.*;
+import javafx.util.StringConverter;
 
 import java.net.URL;
 import java.util.Calendar;
@@ -15,8 +20,10 @@ import java.util.ResourceBundle;
 public class LifeAchievementsController implements Initializable {
     @FXML
     private TreeView<Achievement> treeView;
+    private TreeCell<Achievement> treeCell;
+    private TreeCell<Achievement> source;
     @FXML
-    private Label label;
+    private Label name;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -46,6 +53,45 @@ public class LifeAchievementsController implements Initializable {
         rootItem.getChildren().addAll(categoryItem1, categoryItem2);
         categoryItem1.getChildren().addAll(categoryItem1_1, achiev1);
         categoryItem1_1.getChildren().addAll(achiev2, achiev3);
+
+        treeView.setCellFactory(ach -> {
+            //creating cell from default factory
+            treeCell = TextFieldTreeCell.forTreeView((new TextFieldTreeCell<Achievement>()).getConverter()).call(ach);
+            //setting handlers
+            treeCell.setOnDragDetected(this::onDragDetected);
+            treeCell.setOnDragOver(this::onDragOver);
+            treeCell.setOnDragDropped(this::onDragDropped);
+            return treeCell;
+        });
+    }
+
+    private void onDragDetected(MouseEvent event) {
+        source = (TreeCell<Achievement>) event.getSource();
+        if(source.getTreeItem() != null){
+            Dragboard dragboard = source.startDragAndDrop(TransferMode.ANY);
+            ClipboardContent content = new ClipboardContent();
+            content.putString(source.getTreeItem().toString());
+            dragboard.setContent(content);
+        }
+        event.consume();
+    }
+
+    private void onDragOver(DragEvent dragEvent) {
+        Dragboard dragboard = dragEvent.getDragboard();
+        if (dragboard.hasString()) {
+            dragEvent.acceptTransferModes(TransferMode.ANY);
+        }
+        dragEvent.consume();
+    }
+
+    private void onDragDropped(DragEvent dragEvent) {
+        TreeCell<Achievement> targetNode = (TreeCell<Achievement>) dragEvent.getGestureTarget();
+        if(!source.getTreeItem().equals(targetNode.getTreeItem()) && targetNode.getTreeItem() != null){
+            source.getTreeItem().getParent().getChildren().remove(source.getTreeItem());
+            targetNode.getTreeItem().getChildren().add(source.getTreeItem());
+        }
+        dragEvent.setDropCompleted(true);
+        dragEvent.consume();
     }
 
     public void selectItem(){
@@ -53,13 +99,13 @@ public class LifeAchievementsController implements Initializable {
         if(item != null){
             if(item.isLeaf()){
                 if(item.getValue() instanceof Challenge){
-                    label.setText(((Challenge) item.getValue()).getDistance() + "");
+                    name.setText(((Challenge) item.getValue()).getDistance() + "");
                 }else{
-                    label.setText(item.getValue().toString());
+                    name.setText(item.getValue().toString());
                 }
             }else{
                 int size = checkChildren(item);
-                label.setText("Категория: " + item.getValue() + " Количество ачивок: " + size);
+                name.setText("Категория: " + item.getValue() + " Количество ачивок: " + size);
             }
         }
     }
