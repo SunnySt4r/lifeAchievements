@@ -4,10 +4,7 @@ import com.github.sunnyst4r.lifeachievements.Achievements.Achievement;
 import com.github.sunnyst4r.lifeachievements.Achievements.Challenge;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TreeCell;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTreeCell;
 import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
@@ -31,6 +28,8 @@ public class LifeAchievementsController implements Initializable {
     private Label nameCategory;
     @FXML
     private Label countAchievements;
+    @FXML
+    private TableView<String> achievementInfo;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
