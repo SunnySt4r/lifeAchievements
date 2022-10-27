@@ -3,7 +3,6 @@ package com.github.sunnyst4r.lifeachievements;
 import com.github.sunnyst4r.lifeachievements.Achievements.Achievement;
 import com.github.sunnyst4r.lifeachievements.Achievements.Category;
 import com.github.sunnyst4r.lifeachievements.Achievements.Challenge;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -15,6 +14,7 @@ import java.net.URL;
 import java.util.Calendar;
 import java.util.ResourceBundle;
 
+@SuppressWarnings("unchecked")
 public class LifeAchievementsController implements Initializable {
     @FXML
     private TreeView<Category> treeView;
