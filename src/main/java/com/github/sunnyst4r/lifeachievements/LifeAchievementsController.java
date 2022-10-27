@@ -2,6 +2,7 @@ package com.github.sunnyst4r.lifeachievements;
 
 import com.github.sunnyst4r.lifeachievements.Achievements.Achievement;
 import com.github.sunnyst4r.lifeachievements.Achievements.Challenge;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -28,8 +29,6 @@ public class LifeAchievementsController implements Initializable {
     private Label nameCategory;
     @FXML
     private Label countAchievements;
-    @FXML
-    private TableView<String> achievementInfo;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -109,9 +108,9 @@ public class LifeAchievementsController implements Initializable {
                 achievementPanel.setOpacity(1);
                 achievementPanel.setDisable(false);
                 if(item.getValue() instanceof Challenge){
-                    nameAchievement.setText(((Challenge) item.getValue()).getDistance() + "");
+                    nameAchievement.setText(item.getValue().getName());
                 }else{
-                    nameAchievement.setText(item.getValue().toString());
+                    nameAchievement.setText(item.getValue().getName());
                 }
             }else{
                 achievementPanel.setOpacity(0);
@@ -135,5 +134,19 @@ public class LifeAchievementsController implements Initializable {
             }
             return size;
         }
+    }
+
+    public void createNewAchievement() {
+        TreeItem<Achievement> target;
+        if(Math.random() > 0.5){
+            target = treeView.getRoot();
+        }else{
+            target = treeView.getRoot().getChildren()
+                    .get((int) (Math.random()*treeView.getRoot().getChildren().size()));
+        }
+        String[] names = {"Покушать", "Позаниматься", "Пописать код", "Поделать домашку", "Полить цветы", "Сделать оригами", "Съесть мармеладки"};
+        Achievement achievement = new Achievement(Calendar.getInstance().getTime(), names[(int) (Math.random()*7)]);
+        TreeItem<Achievement> achievementItem = new TreeItem<>(achievement);
+        target.getChildren().add(achievementItem);
     }
 }

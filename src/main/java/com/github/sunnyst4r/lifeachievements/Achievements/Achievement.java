@@ -1,10 +1,12 @@
 package com.github.sunnyst4r.lifeachievements.Achievements;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class Achievement {
     private Date creatingDate;
     private Date end = null;
+    private Date finished = null;
     private String name;
     private String description = "";
     private boolean isDone = false;
@@ -47,6 +49,7 @@ public class Achievement {
 
     public void done(){
         isDone = true;
+        finished = Calendar.getInstance().getTime();
     }
 
     @Override
