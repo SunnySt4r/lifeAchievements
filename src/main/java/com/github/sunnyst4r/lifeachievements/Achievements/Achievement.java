@@ -3,17 +3,16 @@ package com.github.sunnyst4r.lifeachievements.Achievements;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Achievement {
+public class Achievement extends Category{
     private Date creatingDate;
     private Date end = null;
     private Date finished = null;
-    private String name;
     private String description = "";
     private boolean isDone = false;
 
     public Achievement(Date creatingDate, String name){
+        super(name);
         this.creatingDate = creatingDate;
-        this.name = name;
     }
 
     public Achievement(Date creatingDate, String name, String description){
@@ -39,10 +38,6 @@ public class Achievement {
         return end;
     }
 
-    public String getName(){
-        return name;
-    }
-
     public String getDescription(){
         return description;
     }
@@ -54,6 +49,6 @@ public class Achievement {
 
     @Override
     public String toString() {
-        return name;
+        return super.toString();
     }
 }

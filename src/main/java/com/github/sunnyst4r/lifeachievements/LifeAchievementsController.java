@@ -1,6 +1,7 @@
 package com.github.sunnyst4r.lifeachievements;
 
 import com.github.sunnyst4r.lifeachievements.Achievements.Achievement;
+import com.github.sunnyst4r.lifeachievements.Achievements.Category;
 import com.github.sunnyst4r.lifeachievements.Achievements.Challenge;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,9 +17,9 @@ import java.util.ResourceBundle;
 
 public class LifeAchievementsController implements Initializable {
     @FXML
-    private TreeView<Achievement> treeView;
-    private TreeCell<Achievement> treeCell;
-    private TreeCell<Achievement> source;
+    private TreeView<Category> treeView;
+    private TreeCell<Category> treeCell;
+    private TreeCell<Category> source;
     @FXML
     private AnchorPane achievementPanel;
     @FXML
@@ -33,21 +34,21 @@ public class LifeAchievementsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        Achievement root = new Achievement(Calendar.getInstance().getTime(), "Ачивки");
-        Achievement category1 = new Achievement(Calendar.getInstance().getTime(), "1.");
-        Achievement category2 = new Achievement(Calendar.getInstance().getTime(), "2.");
-        Achievement category1_1 = new Achievement(Calendar.getInstance().getTime(), "1.1");
+        Category root = new Category("Ачивки");
+        Category category1 = new Category("1.");
+        Category category2 = new Category("2.");
+        Category category1_1 = new Category("1.1");
         Achievement achievement1 = new Achievement(Calendar.getInstance().getTime(), "сделать дела");
         Achievement achievement2 = new Achievement(Calendar.getInstance().getTime(), "написать программу");
         Challenge challenge = new Challenge(Calendar.getInstance().getTime(), "челендж 1", 100);
 
-        TreeItem<Achievement> rootItem = new TreeItem<>(root);
-        TreeItem<Achievement> categoryItem1 = new TreeItem<>(category1);
-        TreeItem<Achievement> categoryItem2 = new TreeItem<>(category2);
-        TreeItem<Achievement> categoryItem1_1 = new TreeItem<>(category1_1);
-        TreeItem<Achievement> achiev1 = new TreeItem<>(achievement1);
-        TreeItem<Achievement> achiev2 = new TreeItem<>(achievement2);
-        TreeItem<Achievement> achiev3 = new TreeItem<>(challenge);
+        TreeItem<Category> rootItem = new TreeItem<>(root);
+        TreeItem<Category> categoryItem1 = new TreeItem<>(category1);
+        TreeItem<Category> categoryItem2 = new TreeItem<>(category2);
+        TreeItem<Category> categoryItem1_1 = new TreeItem<>(category1_1);
+        TreeItem<Category> achiev1 = new TreeItem<>(achievement1);
+        TreeItem<Category> achiev2 = new TreeItem<>(achievement2);
+        TreeItem<Category> achiev3 = new TreeItem<>(challenge);
 
         treeView.setRoot(rootItem);
         treeView.setShowRoot(false);
@@ -61,7 +62,7 @@ public class LifeAchievementsController implements Initializable {
 
         treeView.setCellFactory(ach -> {
             //creating cell from default factory
-            treeCell = TextFieldTreeCell.forTreeView((new TextFieldTreeCell<Achievement>()).getConverter()).call(ach);
+            treeCell = TextFieldTreeCell.forTreeView((new TextFieldTreeCell<Category>()).getConverter()).call(ach);
             //setting handlers
             treeCell.setOnDragDetected(this::onDragDetected);
             treeCell.setOnDragOver(this::onDragOver);
@@ -71,7 +72,7 @@ public class LifeAchievementsController implements Initializable {
     }
 
     private void onDragDetected(MouseEvent event) {
-        source = (TreeCell<Achievement>) event.getSource();
+        source = (TreeCell<Category>) event.getSource();
         if(source.getTreeItem() != null){
             Dragboard dragboard = source.startDragAndDrop(TransferMode.ANY);
             ClipboardContent content = new ClipboardContent();
@@ -90,8 +91,11 @@ public class LifeAchievementsController implements Initializable {
     }
 
     private void onDragDropped(DragEvent dragEvent) {
-        TreeCell<Achievement> targetNode = (TreeCell<Achievement>) dragEvent.getGestureTarget();
-        if(!source.getTreeItem().equals(targetNode.getTreeItem()) && targetNode.getTreeItem() != null){
+        TreeCell<Category> targetNode = (TreeCell<Category>) dragEvent.getGestureTarget();
+        if(!source.getTreeItem().equals(targetNode.getTreeItem())
+                && targetNode.getTreeItem() != null
+                && !(targetNode.getTreeItem().getValue() instanceof Achievement)){
+
             source.getTreeItem().getParent().getChildren().remove(source.getTreeItem());
             targetNode.getTreeItem().getChildren().add(source.getTreeItem());
         }
@@ -100,9 +104,9 @@ public class LifeAchievementsController implements Initializable {
     }
 
     public void selectItem(){
-        TreeItem<Achievement> item = treeView.getSelectionModel().getSelectedItem();
+        TreeItem<Category> item = treeView.getSelectionModel().getSelectedItem();
         if(item != null){
-            if(item.isLeaf()){
+            if(item.getValue() instanceof Achievement){
                 categoryPanel.setOpacity(0);
                 categoryPanel.setDisable(true);
                 achievementPanel.setOpacity(1);
@@ -124,12 +128,12 @@ public class LifeAchievementsController implements Initializable {
         }
     }
 
-    private int checkChildren(TreeItem<Achievement> treeItem){
-        if(treeItem.isLeaf()){
+    private int checkChildren(TreeItem<Category> treeItem){
+        if(treeItem.getValue() instanceof Achievement){
             return 1;
         }else{
             int size = 0;
-            for(TreeItem<Achievement> item : treeItem.getChildren()){
+            for(TreeItem<Category> item : treeItem.getChildren()){
                 size += checkChildren(item);
             }
             return size;
@@ -137,7 +141,7 @@ public class LifeAchievementsController implements Initializable {
     }
 
     public void createNewAchievement() {
-        TreeItem<Achievement> target;
+        TreeItem<Category> target;
         if(Math.random() > 0.5){
             target = treeView.getRoot();
         }else{
@@ -146,7 +150,7 @@ public class LifeAchievementsController implements Initializable {
         }
         String[] names = {"Покушать", "Позаниматься", "Пописать код", "Поделать домашку", "Полить цветы", "Сделать оригами", "Съесть мармеладки"};
         Achievement achievement = new Achievement(Calendar.getInstance().getTime(), names[(int) (Math.random()*7)]);
-        TreeItem<Achievement> achievementItem = new TreeItem<>(achievement);
+        TreeItem<Category> achievementItem = new TreeItem<>(achievement);
         target.getChildren().add(achievementItem);
     }
 }
