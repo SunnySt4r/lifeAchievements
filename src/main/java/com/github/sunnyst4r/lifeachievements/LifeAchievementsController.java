@@ -3,7 +3,6 @@ package com.github.sunnyst4r.lifeachievements;
 import com.github.sunnyst4r.lifeachievements.Achievements.Achievement;
 import com.github.sunnyst4r.lifeachievements.Achievements.Category;
 import com.github.sunnyst4r.lifeachievements.Achievements.Challenge;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -35,31 +34,7 @@ public class LifeAchievementsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        Category root = new Category("Ачивки");
-        Category category1 = new Category("1.");
-        Category category2 = new Category("2.");
-        Category category1_1 = new Category("1.1");
-        Achievement achievement1 = new Achievement(Calendar.getInstance().getTime(), "сделать дела");
-        Achievement achievement2 = new Achievement(Calendar.getInstance().getTime(), "написать программу");
-        Challenge challenge = new Challenge(Calendar.getInstance().getTime(), "челендж 1", 100);
-
-        TreeItem<Category> rootItem = new TreeItem<>(root);
-        TreeItem<Category> categoryItem1 = new TreeItem<>(category1);
-        TreeItem<Category> categoryItem2 = new TreeItem<>(category2);
-        TreeItem<Category> categoryItem1_1 = new TreeItem<>(category1_1);
-        TreeItem<Category> achiev1 = new TreeItem<>(achievement1);
-        TreeItem<Category> achiev2 = new TreeItem<>(achievement2);
-        TreeItem<Category> achiev3 = new TreeItem<>(challenge);
-
-        treeView.setRoot(rootItem);
-        treeView.setShowRoot(false);
-        rootItem.setExpanded(true);
-        categoryItem1.setExpanded(true);
-        categoryItem2.setExpanded(true);
-        categoryItem1_1.setExpanded(true);
-        rootItem.getChildren().addAll(categoryItem1, categoryItem2);
-        categoryItem1.getChildren().addAll(categoryItem1_1, achiev1);
-        categoryItem1_1.getChildren().addAll(achiev2, achiev3);
+        (new XMLOpener(treeView)).open("src/xml/1.xml");
 
         treeView.setCellFactory(ach -> {
             //creating cell from default factory
@@ -155,7 +130,11 @@ public class LifeAchievementsController implements Initializable {
         target.getChildren().add(achievementItem);
     }
 
-    public void saveFileAsXML() {
+    public void saveXMLFile() {
         (new XMLSaver(treeView)).save();
+    }
+
+    public void openXMLFile() {
+        (new XMLOpener(treeView)).open("src/xml/1.xml");
     }
 }
