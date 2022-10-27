@@ -3,6 +3,7 @@ package com.github.sunnyst4r.lifeachievements;
 import com.github.sunnyst4r.lifeachievements.Achievements.Achievement;
 import com.github.sunnyst4r.lifeachievements.Achievements.Category;
 import com.github.sunnyst4r.lifeachievements.Achievements.Challenge;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -152,5 +153,9 @@ public class LifeAchievementsController implements Initializable {
         Achievement achievement = new Achievement(Calendar.getInstance().getTime(), names[(int) (Math.random()*7)]);
         TreeItem<Category> achievementItem = new TreeItem<>(achievement);
         target.getChildren().add(achievementItem);
+    }
+
+    public void saveFileAsXML() {
+        (new XMLSaver(treeView)).save();
     }
 }

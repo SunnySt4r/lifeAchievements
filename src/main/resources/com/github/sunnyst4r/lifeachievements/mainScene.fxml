@@ -62,6 +62,7 @@
             <Menu mnemonicParsing="false" text="Edit">
                <items>
                   <MenuItem mnemonicParsing="false" text="Delete" />
+                  <MenuItem onAction="#saveFileAsXML" mnemonicParsing="false" text="Save" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Help">
