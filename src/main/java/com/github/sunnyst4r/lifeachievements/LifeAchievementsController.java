@@ -2,10 +2,8 @@ package com.github.sunnyst4r.lifeachievements;
 
 import com.github.sunnyst4r.lifeachievements.Achievements.Achievement;
 import com.github.sunnyst4r.lifeachievements.Achievements.Category;
-import com.github.sunnyst4r.lifeachievements.Achievements.Challenge;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTreeCell;
 import javafx.scene.input.*;
@@ -79,21 +77,23 @@ public class LifeAchievementsController implements Initializable {
     private void onDragDropped(DragEvent dragEvent) {
         //drop TreeItem into other TreeItem
 
-        TreeCell<Category> targetNode = (TreeCell<Category>) dragEvent.getGestureTarget();
+        TreeItem<Category> targetNode = ((TreeCell<Category>) dragEvent.getGestureTarget()).getTreeItem();
+        //if target is null, we can drop into root TreeItem
+        if(targetNode == null){
+            targetNode = treeView.getRoot();
+        }
         //check target TreeItem is available
         //not node that dragged && not null && not Achievement or Challenge && not subnode
-        if(!source.getTreeItem().equals(targetNode.getTreeItem())
-                && targetNode.getTreeItem() != null
-                && !(targetNode.getTreeItem().getValue() instanceof Achievement)
-                && !checkIsChild(targetNode.getTreeItem(), source.getTreeItem())){
+        if(!source.getTreeItem().equals(targetNode)
+                && !(targetNode.getValue() instanceof Achievement)
+                && !checkIsChild(targetNode, source.getTreeItem())){
 
             //remove from one TreeItem and insert into other
             source.getTreeItem().getParent().getChildren().remove(source.getTreeItem());
-            targetNode.getTreeItem().getChildren().add(source.getTreeItem());
+            targetNode.getChildren().add(source.getTreeItem());
 
             //rename all Lable in TreeItem after dropping into other place
-            TreeItem<Category> root = treeView.getRoot();
-            renameLabel(root, "");
+            renameLabel(treeView.getRoot(), "");
         }
         dragEvent.setDropCompleted(true);
         dragEvent.consume();
@@ -104,18 +104,22 @@ public class LifeAchievementsController implements Initializable {
 
         TreeItem<Category> item = treeView.getSelectionModel().getSelectedItem();
         if(item != null){
-            //change information tabs
+            //change information tabs Achievement or Category
             if(item.getValue() instanceof Achievement){
-                informationTabPane.getTabs().clear();
-                informationTabPane.getTabs().add(achievementTab);
-                if(item.getValue() instanceof Challenge){
-                    nameAchievement.setText(item.getValue().getName());
-                }else{
-                    nameAchievement.setText(item.getValue().getName());
+                //replace if other type of tab or size=0
+                if(informationTabPane.getTabs().size()==0
+                        || !informationTabPane.getTabs().get(0).equals(achievementTab)){
+                    informationTabPane.getTabs().clear();
+                    informationTabPane.getTabs().add(achievementTab);
                 }
+                nameAchievement.setText(item.getValue().getName());
             }else{
-                informationTabPane.getTabs().clear();
-                informationTabPane.getTabs().add(categoryTab);
+                //replace if other type of tab or size=0
+                if(informationTabPane.getTabs().size()==0
+                        || !informationTabPane.getTabs().get(0).equals(categoryTab)){
+                    informationTabPane.getTabs().clear();
+                    informationTabPane.getTabs().add(categoryTab);
+                }
                 int size = countChildren(item);
                 nameCategory.setText(item.getValue().toString());
                 countAchievements.setText(String.valueOf(size));
