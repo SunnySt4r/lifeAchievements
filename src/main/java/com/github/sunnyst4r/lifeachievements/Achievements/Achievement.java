@@ -6,7 +6,7 @@ import java.util.Date;
 public class Achievement extends Category{
     private Date creatingDate;
     private Date end = null;
-    private Date finished = null;
+    private Date finish = null;
     private String description = "";
     private boolean isDone = false;
 
@@ -44,7 +44,7 @@ public class Achievement extends Category{
 
     public void done(){
         isDone = true;
-        finished = Calendar.getInstance().getTime();
+        finish = Calendar.getInstance().getTime();
     }
 
     @Override

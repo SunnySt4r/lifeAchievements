@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Category name="Ачивки">
     <Category name="Книги">
-        <Category name="Книги художественные">
-            <Achievement creationDate="1666906239331" name="написать программу"/>
-            <Challenge creationDate="1666906239331" distance="100" name="челендж 1"/>
-            <Achievement creationDate="1666906263461" name="Покушать"/>
-            <Achievement creationDate="1666906259078" name="Позаниматься"/>
-            <Achievement creationDate="1666906257394" name="Сделать оригами"/>
-        </Category>
-        <Achievement creationDate="1666906257957" name="Сделать оригами"/>
         <Achievement creationDate="1666906261300" name="Позаниматься"/>
         <Achievement creationDate="1666906262420" name="Съесть мармеладки"/>
         <Achievement creationDate="1666906258531" name="Поделать домашку"/>
@@ -20,7 +12,15 @@
             <Achievement creationDate="1666906260781" name="Сделать оригами"/>
             <Achievement creationDate="1666906256233" name="Позаниматься"/>
             <Achievement creationDate="1666906239308" name="сделать дела"/>
+            <Achievement creationDate="1666906257957" name="Сделать оригами"/>
+            <Category name="Книги художественные">
+                <Challenge creationDate="1666906239331" distance="100" name="челендж 1"/>
+                <Achievement creationDate="1666906263461" name="Покушать"/>
+                <Achievement creationDate="1666906259078" name="Позаниматься"/>
+                <Achievement creationDate="1666906257394" name="Сделать оригами"/>
+            </Category>
         </Category>
+        <Achievement creationDate="1666906239331" name="написать программу"/>
     </Category>
     <Achievement creationDate="1666906256795" name="Поделать домашку"/>
     <Achievement creationDate="1666906261805" name="Позаниматься"/>
