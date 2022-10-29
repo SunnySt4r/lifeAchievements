@@ -21,29 +21,37 @@ import java.text.ParseException;
 import java.util.Calendar;
 
 public class XMLOpener {
-    private TreeView<Category> treeView;
+    private final TreeView<Category> treeView;
 
     public XMLOpener(TreeView<Category> treeView){
         this.treeView = treeView;
     }
 
     public void open(String xml){
+        //open file.xml with path (String xml)
+
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         try{
             DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
             Document dom = documentBuilder.parse(new File(xml));
             dom.getDocumentElement().normalize();
+            //get root element from document
             Element rootElement = dom.getDocumentElement();
+            //create root TreeItem with Category constructor
             TreeItem<Category> root = new TreeItem<>(new Category(rootElement.getAttribute("name")));
 
             NodeList nodeList = rootElement.getChildNodes();
+            //iterate every elements in root
             for(int i=0; i<nodeList.getLength(); i++){
                 Node node = nodeList.item(i);
+                //every second element is not Node.ELEMENT_NODE
+                //because of this index = (i+1)/2
                 if(node.getNodeType() == Node.ELEMENT_NODE){
                     Element element = (Element) node;
                     addTreeItem(element, root, String.valueOf(((i+1)/2)));
                 }
             }
+            //set root into treeView from gui
             treeView.setRoot(root);
             treeView.setShowRoot(false);
             root.setExpanded(true);
@@ -55,11 +63,15 @@ public class XMLOpener {
 
     @SuppressWarnings("unchecked")
     private void addTreeItem(Element element, TreeItem<Category> superItem, String index) throws ParseException {
+        //parse TreeItem from element and add it into superItem, and add Label with index like 1.2.3
+
         TreeItem<Category> item;
+        //if element is category we need to add all items to this element
         if(element.getTagName().equals("Category")){
             Category category = new Category(element.getAttribute("name"));
             item = new TreeItem<>(category, new Label(index));
 
+            //iterate all elements in Category, and add into Category
             NodeList nodeList = element.getChildNodes();
             for(int i=0; i<nodeList.getLength(); i++){
                 Node node = nodeList.item(i);
@@ -69,9 +81,13 @@ public class XMLOpener {
                 }
             }
         }else{
+            //element is Achievement or Challenge
+
+            //parse creation date
             Calendar c = Calendar.getInstance();
             c.setTimeInMillis(Long.parseLong(element.getAttribute("creationDate")));
             if(element.getTagName().equals("Challenge")){
+                //add new challenge from attributes
                 Challenge challenge = new Challenge(
                         c.getTime(),
                         element.getAttribute("name"),
@@ -79,6 +95,7 @@ public class XMLOpener {
                 );
                 item = new TreeItem<>(challenge, new Label(index));
             }else{
+                //add new achievement from attributes
                 Achievement achievement = new Achievement(
                         c.getTime(),
                         element.getAttribute("name")
@@ -86,6 +103,7 @@ public class XMLOpener {
                 item = new TreeItem<>(achievement, new Label(index));
             }
         }
+        //add (TreeItem) item into (TreeItem) superItem
         superItem.getChildren().addAll(item);
     }
 }
