@@ -1,0 +1,11 @@
+.tree-cell-on-drag-entered-true{
+    -fx-background: rgba(0,255,0,0.5);
+    -fx-border: solid 2px;
+    -fx-border-color: green;
+}
+
+.tree-cell-on-drag-entered-false{
+    -fx-background: rgba(255,0,0,0.5);
+    -fx-border: solid 2px;
+    -fx-border-color: red;
+}

@@ -35,6 +35,9 @@ public class LifeAchievementsController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        //add stylesheet to TreeView
+        treeView.getStylesheets().add(LifeAchievementsApplication.class.getResource("style.css").toExternalForm());
+
         //clear all tabs from information
         informationTabPane.getTabs().clear();
 
@@ -79,32 +82,30 @@ public class LifeAchievementsController implements Initializable {
     }
 
     private void onDragEntered(DragEvent dragEvent){
-        System.out.println("drag entered: " + dragEvent);
-        //if target isn't null, we can drop into root TreeItem
+        //entered into one of elements and highlight this element
+
+        //if target isn't null and isn't source we set one of two style
         TreeCell<Category> target = (TreeCell<Category>) dragEvent.getTarget();
         if(target != source && target.getTreeItem() != null){
+            //if we can drop element into target we highlight green, else - red
             if(!(target.getTreeItem().getValue() instanceof Achievement)
                     && !checkIsChild(target.getTreeItem(), source.getTreeItem())){
-                target.setBorder(new Border(new BorderStroke(Color.GREEN,
-                        BorderStrokeStyle.SOLID,
-                        CornerRadii.EMPTY,
-                        new BorderWidths(2))));
+                target.getStyleClass().add("tree-cell-on-drag-entered-true");
             }else {
-                target.setBorder(new Border(new BorderStroke(Color.RED,
-                        BorderStrokeStyle.SOLID,
-                        CornerRadii.EMPTY,
-                        new BorderWidths(2))));
+                target.getStyleClass().add("tree-cell-on-drag-entered-false");
             }
         }
         dragEvent.consume();
     }
 
     private void onDragExited(DragEvent dragEvent){
-        System.out.println("drag exited: " + dragEvent);
-        TreeCell<Category> target = (TreeCell<Category>) dragEvent.getTarget();
+        //exited from element and stop highlight this element
 
+        //remove all two styles from the element
+        TreeCell<Category> target = (TreeCell<Category>) dragEvent.getTarget();
         if(target != source){
-            target.setBorder(null);
+            target.getStyleClass().remove("tree-cell-on-drag-entered-false");
+            target.getStyleClass().remove("tree-cell-on-drag-entered-true");
         }
         dragEvent.consume();
     }
