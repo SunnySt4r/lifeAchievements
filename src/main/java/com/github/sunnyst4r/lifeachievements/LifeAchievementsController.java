@@ -7,6 +7,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTreeCell;
 import javafx.scene.input.*;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 
 import java.net.URL;
 import java.util.Calendar;
@@ -46,6 +48,8 @@ public class LifeAchievementsController implements Initializable {
             //setting handlers
             treeCell.setOnDragDetected(this::onDragDetected);
             treeCell.setOnDragOver(this::onDragOver);
+            treeCell.setOnDragEntered(this::onDragEntered);
+            treeCell.setOnDragExited(this::onDragExited);
             treeCell.setOnDragDropped(this::onDragDropped);
             return treeCell;
         });
@@ -70,6 +74,37 @@ public class LifeAchievementsController implements Initializable {
         Dragboard dragboard = dragEvent.getDragboard();
         if (dragboard.hasString()) {
             dragEvent.acceptTransferModes(TransferMode.ANY);
+        }
+        dragEvent.consume();
+    }
+
+    private void onDragEntered(DragEvent dragEvent){
+        System.out.println("drag entered: " + dragEvent);
+        //if target isn't null, we can drop into root TreeItem
+        TreeCell<Category> target = (TreeCell<Category>) dragEvent.getTarget();
+        if(target != source && target.getTreeItem() != null){
+            if(!(target.getTreeItem().getValue() instanceof Achievement)
+                    && !checkIsChild(target.getTreeItem(), source.getTreeItem())){
+                target.setBorder(new Border(new BorderStroke(Color.GREEN,
+                        BorderStrokeStyle.SOLID,
+                        CornerRadii.EMPTY,
+                        new BorderWidths(2))));
+            }else {
+                target.setBorder(new Border(new BorderStroke(Color.RED,
+                        BorderStrokeStyle.SOLID,
+                        CornerRadii.EMPTY,
+                        new BorderWidths(2))));
+            }
+        }
+        dragEvent.consume();
+    }
+
+    private void onDragExited(DragEvent dragEvent){
+        System.out.println("drag exited: " + dragEvent);
+        TreeCell<Category> target = (TreeCell<Category>) dragEvent.getTarget();
+
+        if(target != source){
+            target.setBorder(null);
         }
         dragEvent.consume();
     }
