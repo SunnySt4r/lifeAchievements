@@ -12,7 +12,7 @@ public class LifeAchievementsApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(LifeAchievementsApplication.class.getResource("mainScene.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Hello!");
+        stage.setTitle("Life Achievements");
         stage.setScene(scene);
         stage.show();
     }
