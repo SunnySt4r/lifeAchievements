@@ -25,6 +25,8 @@ public class LifeAchievementsController implements Initializable {
     @FXML
     private Tab categoryTab;
     @FXML
+    private Tab creationTab;
+    @FXML
     private Label nameAchievement;
     @FXML
     private Label nameCategory;

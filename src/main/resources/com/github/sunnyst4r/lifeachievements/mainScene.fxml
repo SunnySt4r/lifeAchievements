@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -49,7 +50,7 @@
                            <content>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <TreeView fx:id="treeView" onContextMenuRequested="#selectItem" onMouseClicked="#selectItem" onKeyPressed="#selectItem" prefHeight="369.0" prefWidth="416.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    <TreeView fx:id="treeView" onContextMenuRequested="#selectItem" onKeyPressed="#selectItem" onMouseClicked="#selectItem" prefHeight="369.0" prefWidth="416.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                  </children>
                               </AnchorPane>
                            </content>
@@ -130,6 +131,15 @@
                                  </children>
                               </AnchorPane>
                            </content>
+                        </Tab>
+                        <Tab fx:id="creationTab" text="Creation">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <ChoiceBox layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="119.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0" />
+                                 </children>
+                              </AnchorPane>
+                          </content>
                         </Tab>
                      </tabs>
                   </TabPane>
