@@ -2,6 +2,7 @@ package com.github.sunnyst4r.lifeachievements;
 
 import com.github.sunnyst4r.lifeachievements.Achievements.Achievement;
 import com.github.sunnyst4r.lifeachievements.Achievements.Category;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -20,16 +21,58 @@ public class LifeAchievementsController implements Initializable {
     private TreeView<Category> treeView;
     private TreeCell<Category> treeCell;
     private TreeCell<Category> source;
+
+    //get information tab
     @FXML
     private Tab achievementTab ;
     @FXML
     private Tab categoryTab;
+
+    //get all creation tab
     @FXML
-    private Tab creationTab;
+    private Tab creationCategoryTab;
     @FXML
-    private Label nameAchievement;
+    private Tab creationAchievementTab;
     @FXML
-    private Label nameCategory;
+    private Tab creationChallengeTab;
+
+    //get all components of creation category
+    @FXML
+    private TextField categoryName;
+
+    //get all components of creation achievement
+    @FXML
+    private TextField achievementName;
+    @FXML
+    private CheckBox achievementHasDateCreation;
+    @FXML
+    private DatePicker achievementDateCreationPicker;
+    @FXML
+    private CheckBox achievementHasDateEnding;
+    @FXML
+    private DatePicker achievementDateEndingPicker;
+    @FXML
+    private TextArea achievementDescription;
+
+    //get all components of creation challenge
+    @FXML
+    private TextField challengeName;
+    @FXML
+    private CheckBox challengeHasDateCreation;
+    @FXML
+    private DatePicker challengeDateCreationPicker;
+    @FXML
+    private CheckBox challengeHasDateEnding;
+    @FXML
+    private DatePicker challengeDateEndingPicker;
+    @FXML
+    private TextArea challengeDescription;
+    @FXML
+    private Spinner<Integer> challengeDistance;
+    @FXML
+    private Label achievementNameInfo;
+    @FXML
+    private Label categoryNameInfo;
     @FXML
     private Label countAchievements;
 
@@ -148,7 +191,7 @@ public class LifeAchievementsController implements Initializable {
                     informationTabPane.getTabs().clear();
                     informationTabPane.getTabs().add(achievementTab);
                 }
-                nameAchievement.setText(item.getValue().getName());
+                achievementNameInfo.setText(item.getValue().getName());
             }else{
                 //replace if other type of tab or size=0
                 if(informationTabPane.getTabs().size()==0
@@ -157,7 +200,7 @@ public class LifeAchievementsController implements Initializable {
                     informationTabPane.getTabs().add(categoryTab);
                 }
                 int size = countChildren(item);
-                nameCategory.setText(item.getValue().toString());
+                categoryNameInfo.setText(item.getValue().toString());
                 countAchievements.setText(String.valueOf(size));
             }
         }
@@ -213,23 +256,6 @@ public class LifeAchievementsController implements Initializable {
         }
     }
 
-    public void createNewAchievement() {
-        //create new Achievement in random place
-        //TODO normal creation of Achievements and Category
-
-        TreeItem<Category> target;
-        if(Math.random() > 0.5){
-            target = treeView.getRoot();
-        }else{
-            target = treeView.getRoot().getChildren()
-                    .get((int) (Math.random()*treeView.getRoot().getChildren().size()));
-        }
-        String[] names = {"Покушать", "Позаниматься", "Пописать код", "Поделать домашку", "Полить цветы", "Сделать оригами", "Съесть мармеладки"};
-        Achievement achievement = new Achievement(Calendar.getInstance().getTime(), names[(int) (Math.random()*7)]);
-        TreeItem<Category> achievementItem = new TreeItem<>(achievement);
-        target.getChildren().add(achievementItem);
-    }
-
     public void saveXMLFile() {
         //save TreeView as xml file
         (new XMLSaver(treeView)).save();
@@ -238,5 +264,21 @@ public class LifeAchievementsController implements Initializable {
     public void openXMLFile() {
         //open xml file as TreeView
         (new XMLOpener(treeView)).open("src/xml/1.xml");
+    }
+
+    public void createTab(ActionEvent actionEvent) {
+        Tab tab;
+        if(((MenuItem) actionEvent.getSource()).getId().equals("0")){
+            tab = creationCategoryTab;
+        }else if(((MenuItem) actionEvent.getSource()).getId().equals("1")) {
+            tab = creationAchievementTab;
+        }else{
+            tab = creationChallengeTab;
+        }
+        if(informationTabPane.getTabs().size()==0
+                || !informationTabPane.getTabs().get(0).equals(tab)){
+            informationTabPane.getTabs().clear();
+            informationTabPane.getTabs().add(tab);
+        }
     }
 }
