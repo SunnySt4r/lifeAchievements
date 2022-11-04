@@ -2,6 +2,10 @@ package com.github.sunnyst4r.lifeachievements;
 
 import com.github.sunnyst4r.lifeachievements.Achievements.Achievement;
 import com.github.sunnyst4r.lifeachievements.Achievements.Category;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.BooleanPropertyBase;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -79,6 +83,7 @@ public class LifeAchievementsController implements Initializable {
     private Label categoryNameInfo;
     @FXML
     private Label countAchievements;
+    private BooleanProperty isCategory;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -89,9 +94,9 @@ public class LifeAchievementsController implements Initializable {
         (new XMLOpener(treeView)).open("src/xml/1.xml");
 
         //create drag and drop function
-        treeView.setCellFactory(ach -> {
+        treeView.setCellFactory(tv -> {
             //creating cell from default factory
-            treeCell = TextFieldTreeCell.forTreeView((new TextFieldTreeCell<Category>()).getConverter()).call(ach);
+            treeCell = TextFieldTreeCell.forTreeView((new TextFieldTreeCell<Category>()).getConverter()).call(tv);
             //setting handlers
             treeCell.setOnDragDetected(this::onDragDetected);
             treeCell.setOnDragOver(this::onDragOver);
@@ -100,7 +105,6 @@ public class LifeAchievementsController implements Initializable {
             treeCell.setOnDragDropped(this::onDragDropped);
             return treeCell;
         });
-
         /*
             GUI START CONFIGURATION
          */
