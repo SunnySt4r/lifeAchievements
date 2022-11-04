@@ -13,3 +13,8 @@
     -fx-border: solid 2px;
     -fx-border-color: red;
 }
+
+.tree-cell-category{
+    -fx-underline: true;
+    -fx-text-fill: blue;
+}

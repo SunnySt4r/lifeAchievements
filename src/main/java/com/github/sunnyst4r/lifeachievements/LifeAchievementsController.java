@@ -10,7 +10,11 @@ import javafx.scene.control.cell.TextFieldTreeCell;
 import javafx.scene.input.*;
 
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 @SuppressWarnings("unchecked")
@@ -81,9 +85,6 @@ public class LifeAchievementsController implements Initializable {
         //add stylesheet to TreeView
         treeView.getStylesheets().add(LifeAchievementsApplication.class.getResource("style.css").toExternalForm());
 
-        //clear all tabs from information
-        informationTabPane.getTabs().clear();
-
         //load file that we saved before
         (new XMLOpener(treeView)).open("src/xml/1.xml");
 
@@ -99,6 +100,14 @@ public class LifeAchievementsController implements Initializable {
             treeCell.setOnDragDropped(this::onDragDropped);
             return treeCell;
         });
+
+        /*
+            GUI START CONFIGURATION
+         */
+        //clear all tabs from information
+        informationTabPane.getTabs().clear();
+        //rename all index
+        renameLabel(treeView.getRoot(), "");
     }
 
     private void onDragDetected(MouseEvent event) {
@@ -236,6 +245,7 @@ public class LifeAchievementsController implements Initializable {
     }
 
     private void renameLabel(TreeItem<Category> item, String index){
+        //first call is renameLabel(root, "")
         //rename all Lable in order like in example (1.1.4 or 2.5.10.2)
         for(int i=0; i<item.getChildren().size(); i++){
             //check is first row children in root or not
@@ -251,6 +261,7 @@ public class LifeAchievementsController implements Initializable {
             }
             //if Category, then rename all Label in it
             if(!(item.getChildren().get(i).getValue() instanceof Achievement)){
+                item.getChildren().get(i).getGraphic().getStyleClass().add("tree-cell-category");
                 renameLabel(item.getChildren().get(i), text);
             }
         }
@@ -279,6 +290,68 @@ public class LifeAchievementsController implements Initializable {
                 || !informationTabPane.getTabs().get(0).equals(tab)){
             informationTabPane.getTabs().clear();
             informationTabPane.getTabs().add(tab);
+        }
+    }
+
+    public void createNewElement(ActionEvent actionEvent) {
+        String current = ((Button) actionEvent.getSource()).getId();
+        switch (current) {
+            case "category":
+                if (!categoryName.getText().equals("")) {
+                    Category category = new Category(categoryName.getText());
+                    TreeItem<Category> parent = treeView.getRoot();
+                    if (treeView.getSelectionModel().getSelectedItem() != null
+                            && !(treeView.getSelectionModel().getSelectedItem().getValue() instanceof Achievement)) {
+                        parent = treeView.getSelectionModel().getSelectedItem();
+                    }
+                    TreeItem<Category> newItem = new TreeItem<>(category, new Label());
+                    parent.getChildren().add(newItem);
+                    categoryName.clear();
+                    renameLabel(treeView.getRoot(), "");
+                }else {
+                    System.out.println("category's name is null");
+                }
+                break;
+            case "achievement":
+                Date creationDate = Calendar.getInstance().getTime();
+                if(achievementHasDateCreation.isSelected()){
+                    try{
+                        creationDate = new SimpleDateFormat("yyyy-MM-dd")
+                                .parse(achievementDateCreationPicker
+                                        .getValue()
+                                        .toString());
+                    }catch (ParseException e){
+                        System.out.println("Ошибка при переводе даты");
+                    }
+                }
+                if(!achievementName.getText().equals("")){
+                    Achievement achievement = new Achievement(creationDate, achievementName.getText());
+                    TreeItem<Category> newItem = new TreeItem<>(achievement, new Label());
+                    TreeItem<Category> parent = treeView.getRoot();
+                    if (treeView.getSelectionModel().getSelectedItem() != null
+                            && !(treeView.getSelectionModel().getSelectedItem().getValue() instanceof Achievement)) {
+                        parent = treeView.getSelectionModel().getSelectedItem();
+                    }
+                    parent.getChildren().add(newItem);
+                    achievementName.clear();
+                    achievementDateCreationPicker.getEditor().clear();
+                    achievementHasDateCreation.setSelected(false);
+                    achievementDateCreationPicker.setDisable(true);
+                    renameLabel(treeView.getRoot(), "");
+                }else {
+                    System.out.println("achievement's name is null");
+                }
+                break;
+            case "challenge":
+                System.out.println("challenge");
+                break;
+        }
+    }
+
+    public void enableDatePicker(ActionEvent actionEvent) {
+        if(actionEvent.getSource().equals(achievementHasDateCreation)){
+            achievementDateCreationPicker.getEditor().clear();
+            achievementDateCreationPicker.setDisable(!achievementHasDateCreation.isSelected());
         }
     }
 }

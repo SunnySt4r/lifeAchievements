@@ -38,9 +38,9 @@
             </Menu>
             <Menu mnemonicParsing="false" text="New item">
                <items>
-                  <MenuItem mnemonicParsing="false" onAction="#createTab" id="0" text="Category" />
-                  <MenuItem mnemonicParsing="false" onAction="#createTab" id="1" text="Achievement" />
-                  <MenuItem mnemonicParsing="false" onAction="#createTab" id="2" text="Challenge" />
+                  <MenuItem id="0" mnemonicParsing="false" onAction="#createTab" text="Category" />
+                  <MenuItem id="1" mnemonicParsing="false" onAction="#createTab" text="Achievement" />
+                  <MenuItem id="2" mnemonicParsing="false" onAction="#createTab" text="Challenge" />
                </items>
             </Menu>
          </menus>
@@ -140,7 +140,7 @@
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <Button fx:id="createCategoryButton" layoutX="14.0" layoutY="527.0" mnemonicParsing="false" text="Create" />
+                                    <Button id="category" layoutX="14.0" layoutY="527.0" mnemonicParsing="false" onAction="#createNewElement" text="Create" />
                                     <Label layoutX="14.0" layoutY="14.0" text="Название категории*:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0">
                                        <font>
                                           <Font size="15.0" />
@@ -155,7 +155,7 @@
                            <content>
                               <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                  <children>
-                                    <Button fx:id="createAchievementButton" layoutX="14.0" layoutY="527.0" mnemonicParsing="false" text="Create" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
+                                    <Button id="achievement" layoutX="14.0" layoutY="527.0" mnemonicParsing="false" onAction="#createNewElement" text="Create" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
                                     <Label layoutX="7.0" layoutY="14.0" text="Название достижения*:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0">
                                        <font>
                                           <Font size="15.0" />
@@ -167,8 +167,8 @@
                                           <Font size="15.0" />
                                        </font>
                                     </Label>
-                                    <CheckBox fx:id="achievementHasDateCreation" layoutX="243.0" layoutY="93.0" mnemonicParsing="false" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="93.0" />
-                                    <DatePicker fx:id="achievementDateCreationPicker" layoutX="14.0" layoutY="117.0" prefHeight="25.0" prefWidth="248.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="117.0" />
+                                    <CheckBox onAction="#enableDatePicker" fx:id="achievementHasDateCreation" layoutX="243.0" layoutY="93.0" mnemonicParsing="false" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="93.0" />
+                                    <DatePicker fx:id="achievementDateCreationPicker" disable="true" layoutX="14.0" layoutY="117.0" prefHeight="25.0" prefWidth="248.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="117.0" />
                                     <Separator layoutX="4.0" layoutY="60.0" prefHeight="25.0" prefWidth="273.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0" />
                                     <Label layoutX="14.0" layoutY="142.0" prefHeight="32.0" prefWidth="187.0" text="Добавить дату окончания" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="142.0">
                                        <font>
@@ -176,7 +176,7 @@
                                        </font>
                                     </Label>
                                     <CheckBox fx:id="achievementHasDateEnding" layoutX="243.0" layoutY="150.0" mnemonicParsing="false" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="150.0" />
-                                    <DatePicker fx:id="achievementDateEndingPicker" layoutX="13.0" layoutY="174.0" prefHeight="25.0" prefWidth="248.0" promptText="(нет)" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="174.0" />
+                                    <DatePicker fx:id="achievementDateEndingPicker" disable="true" layoutX="13.0" layoutY="174.0" prefHeight="25.0" prefWidth="248.0" promptText="(нет)" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="174.0" />
                                     <Separator layoutX="6.0" layoutY="199.0" prefHeight="25.0" prefWidth="273.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="199.0" />
                                     <Label layoutX="14.0" layoutY="224.0" prefHeight="32.0" prefWidth="78.0" text="Описание:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="224.0">
                                        <font>
@@ -192,7 +192,7 @@
                            <content>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <Button fx:id="createChallenge" layoutX="14.0" layoutY="527.0" mnemonicParsing="false" text="Create" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
+                                    <Button id="challenge" layoutX="14.0" layoutY="527.0" mnemonicParsing="false" onAction="#createNewElement" text="Create" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
                                     <Label layoutX="16.0" layoutY="14.0" text="Название челленджа*:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0">
                                        <font>
                                           <Font size="15.0" />
@@ -205,7 +205,7 @@
                                        </font>
                                     </Label>
                                     <CheckBox fx:id="challengeHasDateCreation" layoutX="242.0" layoutY="93.0" mnemonicParsing="false" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="93.0" />
-                                    <DatePicker fx:id="challengeDateCreationPicker" layoutX="13.0" layoutY="117.0" prefHeight="25.0" prefWidth="248.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="117.0" />
+                                    <DatePicker fx:id="challengeDateCreationPicker" disable="true" layoutX="13.0" layoutY="117.0" prefHeight="25.0" prefWidth="248.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="117.0" />
                                     <Separator layoutY="60.0" prefHeight="25.0" prefWidth="273.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0" />
                                     <Label layoutX="14.0" layoutY="142.0" prefHeight="32.0" prefWidth="187.0" text="Добавить дату окончания" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="142.0">
                                        <font>
@@ -213,7 +213,7 @@
                                        </font>
                                     </Label>
                                     <CheckBox fx:id="challengeHasDateEnding" layoutX="243.0" layoutY="150.0" mnemonicParsing="false" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="150.0" />
-                                    <DatePicker fx:id="challengeDateEndingPicker" layoutX="13.0" layoutY="174.0" prefHeight="25.0" prefWidth="248.0" promptText="(нет)" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="174.0" />
+                                    <DatePicker fx:id="challengeDateEndingPicker" disable="true" layoutX="13.0" layoutY="174.0" prefHeight="25.0" prefWidth="248.0" promptText="(нет)" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="174.0" />
                                     <Separator layoutY="199.0" prefHeight="25.0" prefWidth="273.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="199.0" />
                                     <Label layoutX="14.0" layoutY="283.0" prefHeight="32.0" prefWidth="78.0" text="Описание:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="283.0">
                                        <font>
