@@ -80,7 +80,7 @@ public class Challenge extends Achievement{
     public void pass(){
         currentStreak++;
         if(currentStreak == distance){
-            this.done();
+            this.setDone();
         }
     }
 

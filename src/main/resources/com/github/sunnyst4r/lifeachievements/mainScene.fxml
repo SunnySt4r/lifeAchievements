@@ -175,7 +175,7 @@
                                           <Font size="15.0" />
                                        </font>
                                     </Label>
-                                    <CheckBox fx:id="achievementHasDateEnding" layoutX="243.0" layoutY="150.0" mnemonicParsing="false" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="150.0" />
+                                    <CheckBox onAction="#enableDatePicker" fx:id="achievementHasDateEnding" layoutX="243.0" layoutY="150.0" mnemonicParsing="false" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="150.0" />
                                     <DatePicker fx:id="achievementDateEndingPicker" disable="true" layoutX="13.0" layoutY="174.0" prefHeight="25.0" prefWidth="248.0" promptText="(нет)" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="174.0" />
                                     <Separator layoutX="6.0" layoutY="199.0" prefHeight="25.0" prefWidth="273.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="199.0" />
                                     <Label layoutX="14.0" layoutY="224.0" prefHeight="32.0" prefWidth="78.0" text="Описание:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="224.0">
@@ -204,7 +204,7 @@
                                           <Font size="15.0" />
                                        </font>
                                     </Label>
-                                    <CheckBox fx:id="challengeHasDateCreation" layoutX="242.0" layoutY="93.0" mnemonicParsing="false" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="93.0" />
+                                    <CheckBox onAction="#enableDatePicker" fx:id="challengeHasDateCreation" layoutX="242.0" layoutY="93.0" mnemonicParsing="false" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="93.0" />
                                     <DatePicker fx:id="challengeDateCreationPicker" disable="true" layoutX="13.0" layoutY="117.0" prefHeight="25.0" prefWidth="248.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="117.0" />
                                     <Separator layoutY="60.0" prefHeight="25.0" prefWidth="273.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0" />
                                     <Label layoutX="14.0" layoutY="142.0" prefHeight="32.0" prefWidth="187.0" text="Добавить дату окончания" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="142.0">
@@ -212,7 +212,7 @@
                                           <Font size="15.0" />
                                        </font>
                                     </Label>
-                                    <CheckBox fx:id="challengeHasDateEnding" layoutX="243.0" layoutY="150.0" mnemonicParsing="false" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="150.0" />
+                                    <CheckBox onAction="#enableDatePicker" fx:id="challengeHasDateEnding" layoutX="243.0" layoutY="150.0" mnemonicParsing="false" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="150.0" />
                                     <DatePicker fx:id="challengeDateEndingPicker" disable="true" layoutX="13.0" layoutY="174.0" prefHeight="25.0" prefWidth="248.0" promptText="(нет)" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="174.0" />
                                     <Separator layoutY="199.0" prefHeight="25.0" prefWidth="273.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="199.0" />
                                     <Label layoutX="14.0" layoutY="283.0" prefHeight="32.0" prefWidth="78.0" text="Описание:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="283.0">

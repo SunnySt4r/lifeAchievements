@@ -2,6 +2,7 @@ package com.github.sunnyst4r.lifeachievements;
 
 import com.github.sunnyst4r.lifeachievements.Achievements.Achievement;
 import com.github.sunnyst4r.lifeachievements.Achievements.Category;
+import com.github.sunnyst4r.lifeachievements.Achievements.Challenge;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.BooleanPropertyBase;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -19,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 @SuppressWarnings("unchecked")
@@ -27,7 +29,6 @@ public class LifeAchievementsController implements Initializable {
     public TabPane informationTabPane;
     @FXML
     private TreeView<Category> treeView;
-    private TreeCell<Category> treeCell;
     private TreeCell<Category> source;
 
     //get information tab
@@ -77,32 +78,69 @@ public class LifeAchievementsController implements Initializable {
     private TextArea challengeDescription;
     @FXML
     private Spinner<Integer> challengeDistance;
+    final int MAX_CHALLENGE_DISTANCE = 10000;
+    final int MIN_CHALLENGE_DISTANCE = 2;
+    final int START_VALUE = 10;
+    SpinnerValueFactory<Integer> spinnerValueFactory = new SpinnerValueFactory
+            .IntegerSpinnerValueFactory(MIN_CHALLENGE_DISTANCE, MAX_CHALLENGE_DISTANCE, START_VALUE);
     @FXML
     private Label achievementNameInfo;
     @FXML
     private Label categoryNameInfo;
     @FXML
     private Label countAchievements;
-    private BooleanProperty isCategory;
+
+    //add pseudo class for tree-cell
+    private final PseudoClass CATEGORY = PseudoClass.getPseudoClass("category");
+    private final PseudoClass DONE = PseudoClass.getPseudoClass("done");
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //add stylesheet to TreeView
-        treeView.getStylesheets().add(LifeAchievementsApplication.class.getResource("style.css").toExternalForm());
+        treeView.getStylesheets().add(
+                Objects.requireNonNull(
+                        LifeAchievementsApplication.class.getResource("style.css"))
+                        .toExternalForm()
+        );
 
         //load file that we saved before
         (new XMLOpener(treeView)).open("src/xml/1.xml");
 
-        //create drag and drop function
+        //create new cell factory for pseudo class and drag & drop
         treeView.setCellFactory(tv -> {
-            //creating cell from default factory
-            treeCell = TextFieldTreeCell.forTreeView((new TextFieldTreeCell<Category>()).getConverter()).call(tv);
-            //setting handlers
+            //creating cell with pseudo class
+            TreeCell<Category> treeCell = new TreeCell<>(){
+                @Override
+                public void updateItem(Category item, boolean empty){
+                    //default updater cell
+                    super.updateItem(item, empty);
+                    if(empty){
+                        //if cell is empty, we delete all information inside it
+                        setText("");
+                        setGraphic(null);
+                        //set pseudo class category to false
+                        pseudoClassStateChanged(CATEGORY, false);
+                    }else{
+                        //set Label into graphic of cell
+                        setGraphic(getTreeItem().getGraphic());
+                        //set text of cell
+                        setText(item.getName());
+                        //if cell have an item instanceof category, we set pseudo class active
+                        pseudoClassStateChanged(CATEGORY, !(item instanceof Achievement));
+                        //set if isDone
+                        if(item instanceof Achievement achievement){
+                            pseudoClassStateChanged(DONE, achievement.isDone());
+                        }
+                    }
+                }
+            };
+            //setting handlers for drag & drop
             treeCell.setOnDragDetected(this::onDragDetected);
             treeCell.setOnDragOver(this::onDragOver);
             treeCell.setOnDragEntered(this::onDragEntered);
             treeCell.setOnDragExited(this::onDragExited);
             treeCell.setOnDragDropped(this::onDragDropped);
+
             return treeCell;
         });
         /*
@@ -110,6 +148,8 @@ public class LifeAchievementsController implements Initializable {
          */
         //clear all tabs from information
         informationTabPane.getTabs().clear();
+        //add spinner value factory into spinner
+        challengeDistance.setValueFactory(spinnerValueFactory);
         //rename all index
         renameLabel(treeView.getRoot(), "");
     }
@@ -265,7 +305,6 @@ public class LifeAchievementsController implements Initializable {
             }
             //if Category, then rename all Label in it
             if(!(item.getChildren().get(i).getValue() instanceof Achievement)){
-                item.getChildren().get(i).getGraphic().getStyleClass().add("tree-cell-category");
                 renameLabel(item.getChildren().get(i), text);
             }
         }
@@ -282,6 +321,7 @@ public class LifeAchievementsController implements Initializable {
     }
 
     public void createTab(ActionEvent actionEvent) {
+        //create tab of creation on the right side of scene
         Tab tab;
         if(((MenuItem) actionEvent.getSource()).getId().equals("0")){
             tab = creationCategoryTab;
@@ -290,6 +330,7 @@ public class LifeAchievementsController implements Initializable {
         }else{
             tab = creationChallengeTab;
         }
+        //if side TabPane is clear or have another tab of creation, we clear and add new tab
         if(informationTabPane.getTabs().size()==0
                 || !informationTabPane.getTabs().get(0).equals(tab)){
             informationTabPane.getTabs().clear();
@@ -299,10 +340,13 @@ public class LifeAchievementsController implements Initializable {
 
     public void createNewElement(ActionEvent actionEvent) {
         String current = ((Button) actionEvent.getSource()).getId();
+        Date creationDate = Calendar.getInstance().getTime();
         switch (current) {
             case "category":
                 if (!categoryName.getText().equals("")) {
-                    Category category = new Category(categoryName.getText());
+                    Category category = new Category(
+                            categoryName.getText()
+                    );
                     TreeItem<Category> parent = treeView.getRoot();
                     if (treeView.getSelectionModel().getSelectedItem() != null
                             && !(treeView.getSelectionModel().getSelectedItem().getValue() instanceof Achievement)) {
@@ -310,14 +354,12 @@ public class LifeAchievementsController implements Initializable {
                     }
                     TreeItem<Category> newItem = new TreeItem<>(category, new Label());
                     parent.getChildren().add(newItem);
-                    categoryName.clear();
-                    renameLabel(treeView.getRoot(), "");
+                    clearAndDisableAll();
                 }else {
                     System.out.println("category's name is null");
                 }
                 break;
             case "achievement":
-                Date creationDate = Calendar.getInstance().getTime();
                 if(achievementHasDateCreation.isSelected()){
                     try{
                         creationDate = new SimpleDateFormat("yyyy-MM-dd")
@@ -329,7 +371,11 @@ public class LifeAchievementsController implements Initializable {
                     }
                 }
                 if(!achievementName.getText().equals("")){
-                    Achievement achievement = new Achievement(creationDate, achievementName.getText());
+                    Achievement achievement = new Achievement(
+                            creationDate,
+                            achievementName.getText()
+                    );
+                    System.out.println(achievement);
                     TreeItem<Category> newItem = new TreeItem<>(achievement, new Label());
                     TreeItem<Category> parent = treeView.getRoot();
                     if (treeView.getSelectionModel().getSelectedItem() != null
@@ -337,25 +383,78 @@ public class LifeAchievementsController implements Initializable {
                         parent = treeView.getSelectionModel().getSelectedItem();
                     }
                     parent.getChildren().add(newItem);
-                    achievementName.clear();
-                    achievementDateCreationPicker.getEditor().clear();
-                    achievementHasDateCreation.setSelected(false);
-                    achievementDateCreationPicker.setDisable(true);
-                    renameLabel(treeView.getRoot(), "");
+                    clearAndDisableAll();
                 }else {
                     System.out.println("achievement's name is null");
                 }
                 break;
             case "challenge":
-                System.out.println("challenge");
+                if(challengeHasDateCreation.isSelected()){
+                    try{
+                        creationDate = new SimpleDateFormat("yyyy-MM-dd")
+                                .parse(challengeDateCreationPicker
+                                        .getValue()
+                                        .toString());
+                    }catch (ParseException e){
+                        System.out.println("Ошибка при переводе даты");
+                    }
+                }
+                if(!challengeName.getText().equals("") && challengeDistance.getValue() != null){
+                    Challenge challenge = new Challenge(
+                            creationDate,
+                            challengeName.getText(),
+                            challengeDistance.getValue()
+                    );
+                    TreeItem<Category> newItem = new TreeItem<>(challenge, new Label());
+                    TreeItem<Category> parent = treeView.getRoot();
+                    if (treeView.getSelectionModel().getSelectedItem() != null
+                            && !(treeView.getSelectionModel().getSelectedItem().getValue() instanceof Achievement)) {
+                        parent = treeView.getSelectionModel().getSelectedItem();
+                    }
+                    parent.getChildren().add(newItem);
+                    clearAndDisableAll();
+                }else {
+                    System.out.println("challenge's name is null");
+                }
                 break;
         }
     }
 
     public void enableDatePicker(ActionEvent actionEvent) {
+        DatePicker currentDatePicker = new DatePicker();
         if(actionEvent.getSource().equals(achievementHasDateCreation)){
-            achievementDateCreationPicker.getEditor().clear();
-            achievementDateCreationPicker.setDisable(!achievementHasDateCreation.isSelected());
+            currentDatePicker = achievementDateCreationPicker;
+        }else if(actionEvent.getSource().equals(achievementHasDateEnding)){
+            currentDatePicker = achievementDateEndingPicker;
+        }else if(actionEvent.getSource().equals(challengeHasDateCreation)){
+            currentDatePicker = challengeDateCreationPicker;
+        }else if(actionEvent.getSource().equals(challengeHasDateEnding)){
+            currentDatePicker = challengeDateEndingPicker;
         }
+        currentDatePicker.getEditor().clear();
+        currentDatePicker.setDisable(!((CheckBox) actionEvent.getSource()).isSelected());
+    }
+
+    private void clearAndDisableAll(){
+        //clear all field on category creation tab
+        categoryName.clear();
+        //clear all field on achievement creation tab
+        achievementName.clear();
+        achievementHasDateCreation.setSelected(false);
+        achievementDateCreationPicker.getEditor().clear();
+        achievementDateCreationPicker.setDisable(true);
+        achievementHasDateEnding.setSelected(false);
+        achievementDateEndingPicker.getEditor().clear();
+        //clear all field on challenge creation tab
+        challengeName.clear();
+        challengeHasDateCreation.setSelected(false);
+        challengeDateCreationPicker.getEditor().clear();
+        challengeDateCreationPicker.setDisable(true);
+        challengeHasDateEnding.setSelected(false);
+        challengeDateEndingPicker.getEditor().clear();
+        challengeDateEndingPicker.setDisable(true);
+        challengeDistance.getValueFactory().setValue(START_VALUE);
+        //rename all lable
+        renameLabel(treeView.getRoot(), "");
     }
 }

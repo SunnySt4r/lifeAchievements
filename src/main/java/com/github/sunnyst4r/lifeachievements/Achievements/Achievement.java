@@ -8,7 +8,7 @@ public class Achievement extends Category{
     private Date end = null;
     private Date finish = null;
     private String description = "";
-    private boolean isDone = false;
+    private boolean done = false;
 
     public Achievement(Date creatingDate, String name){
         super(name);
@@ -42,9 +42,13 @@ public class Achievement extends Category{
         return description;
     }
 
-    public void done(){
-        isDone = true;
+    public void setDone(){
+        done = true;
         finish = Calendar.getInstance().getTime();
+    }
+
+    public boolean isDone(){
+        return done;
     }
 
     @Override
