@@ -347,7 +347,7 @@ public class LifeAchievementsController implements Initializable {
         int distance;
         //not necessary params
         Date endDate= null;
-        String description = "";
+        String description;
         //new item
         Category item = null;
         //parent TreeItem
@@ -459,20 +459,28 @@ public class LifeAchievementsController implements Initializable {
             //creation date
         achievementHasDateCreation.setSelected(false);
         achievementDateCreationPicker.setDisable(true);
-        achievementDateCreationPicker.getEditor().setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
+        achievementDateCreationPicker.getEditor().setText(
+                LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+        );
+        achievementDateCreationPicker.setValue(LocalDate.now());
             //ending date
         achievementHasDateEnding.setSelected(false);
         achievementDateEndingPicker.setDisable(true);
+        achievementDateEndingPicker.setValue(null);
         achievementDateEndingPicker.getEditor().setText("(нет)");
         //clear all field on challenge creation tab
         challengeName.clear();
             //creation date
         challengeHasDateCreation.setSelected(false);
         challengeDateCreationPicker.setDisable(true);
-        challengeDateCreationPicker.getEditor().setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));;
+        challengeDateCreationPicker.getEditor().setText(
+                LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+        );
+        challengeDateCreationPicker.setValue(LocalDate.now());
             //ending date
         challengeHasDateEnding.setSelected(false);
         challengeDateEndingPicker.setDisable(true);
+        challengeDateEndingPicker.setValue(null);
         challengeDateEndingPicker.getEditor().setText("(нет)");
             //distance
         challengeDistance.getValueFactory().setValue(START_VALUE);
