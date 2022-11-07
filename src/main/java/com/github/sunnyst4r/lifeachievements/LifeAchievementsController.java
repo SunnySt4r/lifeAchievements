@@ -11,8 +11,6 @@ import javafx.scene.control.*;
 import javafx.scene.input.*;
 
 import java.net.URL;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -154,6 +152,9 @@ public class LifeAchievementsController implements Initializable {
 
     private void onDragDetected(MouseEvent event) {
         //start dragging
+
+        //select current item
+        selectItem();
 
         source = (TreeCell<Category>) event.getSource();
         if(source.getTreeItem() != null){
