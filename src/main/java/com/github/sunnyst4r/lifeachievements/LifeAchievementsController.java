@@ -3,21 +3,19 @@ package com.github.sunnyst4r.lifeachievements;
 import com.github.sunnyst4r.lifeachievements.Achievements.Achievement;
 import com.github.sunnyst4r.lifeachievements.Achievements.Category;
 import com.github.sunnyst4r.lifeachievements.Achievements.Challenge;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.BooleanPropertyBase;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.TextFieldTreeCell;
 import javafx.scene.input.*;
 
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
@@ -339,89 +337,97 @@ public class LifeAchievementsController implements Initializable {
     }
 
     public void createNewElement(ActionEvent actionEvent) {
+        //creation new Category, Achievement or Challenge inside parent TreeItem
+
         String current = ((Button) actionEvent.getSource()).getId();
+        //first need params
+        String name;
         Date creationDate = Calendar.getInstance().getTime();
+        int distance;
+        //not necessary params
+        Date endDate= null;
+        String description = "";
+        //new item
+        Category item = null;
+        //parent TreeItem
+            //root item by default
+        TreeItem<Category> parent = treeView.getRoot();
+        if (treeView.getSelectionModel().getSelectedItem() != null) {
+            //if selected item is achievement or challenge,then parent is his parent
+            if(treeView.getSelectionModel().getSelectedItem().getValue() instanceof Achievement){
+                parent = treeView.getSelectionModel().getSelectedItem().getParent();
+            }else{
+                //if selected item is category, parent is him
+                parent = treeView.getSelectionModel().getSelectedItem();
+            }
+        }
+        //where is a button places?
         switch (current) {
-            case "category":
-                if (!categoryName.getText().equals("")) {
-                    Category category = new Category(
-                            categoryName.getText()
-                    );
-                    TreeItem<Category> parent = treeView.getRoot();
-                    if (treeView.getSelectionModel().getSelectedItem() != null
-                            && !(treeView.getSelectionModel().getSelectedItem().getValue() instanceof Achievement)) {
-                        parent = treeView.getSelectionModel().getSelectedItem();
-                    }
-                    TreeItem<Category> newItem = new TreeItem<>(category, new Label());
-                    parent.getChildren().add(newItem);
-                    clearAndDisableAll();
-                }else {
+            //if category we need: name
+            case "category" -> {
+                name = categoryName.getText();
+                //check necessary params not null
+                if (name.equals("")) {
                     System.out.println("category's name is null");
+                } else {
+                    item = new Category(name);
                 }
-                break;
-            case "achievement":
-                if(achievementHasDateCreation.isSelected()){
-                    try{
-                        creationDate = new SimpleDateFormat("yyyy-MM-dd")
-                                .parse(achievementDateCreationPicker
-                                        .getValue()
-                                        .toString());
-                    }catch (ParseException e){
-                        System.out.println("Ошибка при переводе даты");
-                    }
+            }
+            //if achievement we need: name, creationDate
+            case "achievement" -> {
+                name = achievementName.getText();
+                //check datePickers not null
+                if (achievementHasDateCreation.isSelected()){
+                    creationDate = Date.from(achievementDateCreationPicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
                 }
-                if(!achievementName.getText().equals("")){
-                    Achievement achievement = new Achievement(
-                            creationDate,
-                            achievementName.getText()
-                    );
-                    System.out.println(achievement);
-                    TreeItem<Category> newItem = new TreeItem<>(achievement, new Label());
-                    TreeItem<Category> parent = treeView.getRoot();
-                    if (treeView.getSelectionModel().getSelectedItem() != null
-                            && !(treeView.getSelectionModel().getSelectedItem().getValue() instanceof Achievement)) {
-                        parent = treeView.getSelectionModel().getSelectedItem();
-                    }
-                    parent.getChildren().add(newItem);
-                    clearAndDisableAll();
-                }else {
+                if (achievementHasDateEnding.isSelected()) {
+                    endDate = Date.from(achievementDateEndingPicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+                }
+                description = achievementDescription.getText();
+                //check necessary params not null
+                if (name.equals("")) {
                     System.out.println("achievement's name is null");
+                } else {
+                    item = new Achievement(creationDate, endDate, name, description);
                 }
-                break;
-            case "challenge":
-                if(challengeHasDateCreation.isSelected()){
-                    try{
-                        creationDate = new SimpleDateFormat("yyyy-MM-dd")
-                                .parse(challengeDateCreationPicker
-                                        .getValue()
-                                        .toString());
-                    }catch (ParseException e){
-                        System.out.println("Ошибка при переводе даты");
-                    }
+            }
+            //if challenge we need: name, creationDate, distance
+            case "challenge" -> {
+                name = challengeName.getText();
+                //check datePickers not null
+                if (challengeHasDateCreation.isSelected()){
+                    creationDate = Date.from(challengeDateCreationPicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
                 }
-                if(!challengeName.getText().equals("") && challengeDistance.getValue() != null){
-                    Challenge challenge = new Challenge(
-                            creationDate,
-                            challengeName.getText(),
-                            challengeDistance.getValue()
-                    );
-                    TreeItem<Category> newItem = new TreeItem<>(challenge, new Label());
-                    TreeItem<Category> parent = treeView.getRoot();
-                    if (treeView.getSelectionModel().getSelectedItem() != null
-                            && !(treeView.getSelectionModel().getSelectedItem().getValue() instanceof Achievement)) {
-                        parent = treeView.getSelectionModel().getSelectedItem();
-                    }
-                    parent.getChildren().add(newItem);
-                    clearAndDisableAll();
-                }else {
+                if (challengeHasDateEnding.isSelected()) {
+                    endDate = Date.from(challengeDateEndingPicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+                }
+                description = challengeDescription.getText();
+                distance = challengeDistance.getValue();
+                //check necessary params not null
+                if (name.equals("")) {
                     System.out.println("challenge's name is null");
+                } else if (distance == 0) {
+                    System.out.println("challenge's distance equals 0");
+                } else {
+                    item = new Challenge(creationDate, endDate, name, description, distance);
                 }
-                break;
+            }
+        }
+
+        if(item!=null){
+            //if item is created,we put it inside parent
+            TreeItem<Category> newItem = new TreeItem<>(item, new Label());
+            parent.getChildren().add(newItem);
+            //reset all fields
+            clearAndDisableAll();
         }
     }
 
     public void enableDatePicker(ActionEvent actionEvent) {
+        //unlock datePicker if they check box is selected
+
         DatePicker currentDatePicker = new DatePicker();
+        //find a right one DatePicker
         if(actionEvent.getSource().equals(achievementHasDateCreation)){
             currentDatePicker = achievementDateCreationPicker;
         }else if(actionEvent.getSource().equals(achievementHasDateEnding)){
@@ -431,28 +437,43 @@ public class LifeAchievementsController implements Initializable {
         }else if(actionEvent.getSource().equals(challengeHasDateEnding)){
             currentDatePicker = challengeDateEndingPicker;
         }
-        currentDatePicker.getEditor().clear();
+        //set default date inside DatePicker
+        currentDatePicker.setValue(LocalDate.ofInstant(
+                Calendar.getInstance().toInstant(),
+                ZoneId.systemDefault()
+        ));
+        //set default visible text
+        currentDatePicker.getEditor().setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
+        //unlock DatePicker
         currentDatePicker.setDisable(!((CheckBox) actionEvent.getSource()).isSelected());
     }
 
     private void clearAndDisableAll(){
+        //function for reset all field on scene
+
         //clear all field on category creation tab
         categoryName.clear();
         //clear all field on achievement creation tab
         achievementName.clear();
+            //creation date
         achievementHasDateCreation.setSelected(false);
-        achievementDateCreationPicker.getEditor().clear();
         achievementDateCreationPicker.setDisable(true);
+        achievementDateCreationPicker.getEditor().setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
+            //ending date
         achievementHasDateEnding.setSelected(false);
-        achievementDateEndingPicker.getEditor().clear();
+        achievementDateEndingPicker.setDisable(true);
+        achievementDateEndingPicker.getEditor().setText("(нет)");
         //clear all field on challenge creation tab
         challengeName.clear();
+            //creation date
         challengeHasDateCreation.setSelected(false);
-        challengeDateCreationPicker.getEditor().clear();
         challengeDateCreationPicker.setDisable(true);
+        challengeDateCreationPicker.getEditor().setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));;
+            //ending date
         challengeHasDateEnding.setSelected(false);
-        challengeDateEndingPicker.getEditor().clear();
         challengeDateEndingPicker.setDisable(true);
+        challengeDateEndingPicker.getEditor().setText("(нет)");
+            //distance
         challengeDistance.getValueFactory().setValue(START_VALUE);
         //rename all lable
         renameLabel(treeView.getRoot(), "");
