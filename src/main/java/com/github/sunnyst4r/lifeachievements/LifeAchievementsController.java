@@ -29,7 +29,9 @@ public class LifeAchievementsController implements Initializable {
 
     //get information tab
     @FXML
-    private Tab achievementTab ;
+    private Tab achievementTab;
+    @FXML
+    private Tab challengeTab;
     @FXML
     private Tab categoryTab;
 
@@ -77,14 +79,58 @@ public class LifeAchievementsController implements Initializable {
     final int MAX_CHALLENGE_DISTANCE = 10000;
     final int MIN_CHALLENGE_DISTANCE = 2;
     final int START_VALUE = 10;
-    SpinnerValueFactory<Integer> spinnerValueFactory = new SpinnerValueFactory
+    private final SpinnerValueFactory<Integer> spinnerValueFactory = new SpinnerValueFactory
             .IntegerSpinnerValueFactory(MIN_CHALLENGE_DISTANCE, MAX_CHALLENGE_DISTANCE, START_VALUE);
+
+    //get all components of category info
     @FXML
-    private Label achievementNameInfo;
-    @FXML
-    private Label categoryNameInfo;
+    private TextField categoryNameInfo;
     @FXML
     private Label countAchievements;
+    @FXML
+    private ProgressBar progressCategory;
+
+    //get all components of achievement info
+    @FXML
+    private TextField achievementNameInfo;
+    @FXML
+    private CheckBox isDoneAchievement;
+    @FXML
+    private ProgressBar progressAchievement;
+    @FXML
+    private Label creationDateAchievementInfo;
+    @FXML
+    private Label endingDateAchievementInfo;
+    @FXML
+    private Label finishDateAchievementInfo;
+    @FXML
+    private TextArea achievementDescriptionInfo;
+
+    //get all components of challenge info
+    @FXML
+    private ProgressBar progressChallenge;
+    @FXML
+    private TextField challengeNameInfo;
+    @FXML
+    private Label creationDateChallengeInfo;
+    @FXML
+    private Label endingDateChallengeInfo;
+    @FXML
+    private Label finishDateChallengeInfo;
+    @FXML
+    private TextArea challengeDescriptionInfo;
+    @FXML
+    private Label progressChallengeLable;
+    @FXML
+    private Button minusButton;
+    @FXML
+    private Button plusButton;
+    @FXML
+    private Label lastRecord;
+    @FXML
+    private Label probablyFinishDate;
+    @FXML
+    private Button failButton;
 
     //add pseudo class for tree-cell
     private final PseudoClass CATEGORY = PseudoClass.getPseudoClass("category");

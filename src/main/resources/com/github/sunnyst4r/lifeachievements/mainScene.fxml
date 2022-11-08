@@ -83,26 +83,22 @@
                                        </font>
                                     </Label>
                                     <ProgressBar fx:id="progressCategory" prefHeight="31.0" prefWidth="273.0" progress="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="31.0" />
-                                    <Label prefHeight="21.0" prefWidth="78.0" text="Категория: " AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="76.0">
+                                    <Label prefHeight="25.0" prefWidth="78.0" text="Категория: " AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="76.0">
                                        <font>
                                           <Font size="15.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="categoryNameInfo" prefHeight="21.0" prefWidth="166.0" text="name" AnchorPane.leftAnchor="92.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="76.0">
+                                    <Label layoutX="14.0" layoutY="108.0" prefHeight="21.0" prefWidth="190.0" text="Количество ачивок внутри:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="108.0">
                                        <font>
                                           <Font size="15.0" />
                                        </font>
                                     </Label>
-                                    <Label prefHeight="21.0" prefWidth="190.0" text="Количество ачивок внутри:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="97.0">
+                                    <Label fx:id="countAchievements" layoutX="211.0" layoutY="108.0" text="count" AnchorPane.leftAnchor="211.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="108.0">
                                        <font>
                                           <Font size="15.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="countAchievements" text="count" AnchorPane.leftAnchor="211.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="97.0">
-                                       <font>
-                                          <Font size="15.0" />
-                                       </font>
-                                    </Label>
+                                    <TextField fx:id="categoryNameInfo" layoutX="92.0" layoutY="74.0" AnchorPane.leftAnchor="92.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="76.0" />
                                  </children>
                               </AnchorPane>
                            </content>
@@ -116,25 +112,157 @@
                                           <Font size="15.0" />
                                        </font>
                                     </Label>
-                                    <CheckBox fx:id="isDone" mnemonicParsing="false" prefHeight="21.0" prefWidth="245.0" text="Завершить выполнение" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="104.0">
+                                    <CheckBox fx:id="isDoneAchievement" layoutX="14.0" layoutY="173.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="245.0" text="Завершить выполнение" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="173.0">
                                        <font>
                                           <Font size="15.0" />
                                        </font>
                                     </CheckBox>
                                     <ProgressBar fx:id="progressAchievement" prefHeight="31.0" prefWidth="273.0" progress="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="31.0" />
-                                    <Label prefHeight="21.0" prefWidth="78.0" text="Название: " AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="76.0">
+                                    <Label prefHeight="25.0" prefWidth="78.0" text="Название: " AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="76.0">
                                        <font>
                                           <Font size="15.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="achievementNameInfo" prefHeight="21.0" prefWidth="168.0" text="name" wrapText="true" AnchorPane.leftAnchor="92.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="76.0">
+                                    <TextField fx:id="achievementNameInfo" layoutX="92.0" layoutY="74.0" prefHeight="25.0" prefWidth="170.0" AnchorPane.leftAnchor="92.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="76.0" />
+                                    <Label layoutX="14.0" layoutY="110.0" text="Создано:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="110.0">
                                        <font>
                                           <Font size="15.0" />
                                        </font>
                                     </Label>
+                                    <Label fx:id="creationDateAchievementInfo" layoutX="92.0" layoutY="110.0" AnchorPane.leftAnchor="92.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="110.0">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="14.0" layoutY="131.0" text="Конец:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="131.0">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="endingDateAchievementInfo" layoutX="92.0" layoutY="131.0" prefHeight="21.0" prefWidth="74.0" text="(нет)" AnchorPane.leftAnchor="92.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="131.0">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="16.0" layoutY="152.0" text="Выпонено:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="152.0">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="finishDateAchievementInfo" layoutX="92.0" layoutY="152.0" prefHeight="21.0" prefWidth="97.0" text="(нет)" AnchorPane.leftAnchor="92.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="152.0">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Separator layoutY="207.0" prefHeight="25.0" prefWidth="273.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="207.0" />
+                                    <Label layoutX="14.0" layoutY="232.0" prefHeight="32.0" prefWidth="78.0" text="Описание:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="232.0">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <TextArea fx:id="achievementDescriptionInfo" layoutX="14.0" layoutY="264.0" prefHeight="283.0" prefWidth="245.0" promptText="(нет)" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="264.0" />
                                  </children>
                               </AnchorPane>
                            </content>
+                        </Tab>
+                        <Tab fx:id="challengeTab" text="Challenge">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Label layoutX="14.0" layoutY="11.0" text="Information" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="6.0">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <ProgressBar fx:id="progressChallenge" layoutY="27.0" prefHeight="31.0" prefWidth="273.0" progress="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="31.0" />
+                                    <Label layoutX="14.0" layoutY="73.0" prefHeight="25.0" prefWidth="78.0" text="Название: " AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="76.0">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="challengeNameInfo" layoutX="92.0" layoutY="76.0" prefHeight="25.0" prefWidth="170.0" AnchorPane.leftAnchor="92.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="76.0" />
+                                    <Label layoutX="16.0" layoutY="125.0" text="Создано:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="110.0">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="creationDateChallengeInfo" layoutX="102.0" layoutY="110.0" prefHeight="21.0" prefWidth="93.0" AnchorPane.leftAnchor="92.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="110.0">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="14.0" layoutY="135.0" text="Конец:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="131.0">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="endingDateChallengeInfo" layoutX="92.0" layoutY="131.0" prefHeight="21.0" prefWidth="74.0" text="(нет)" AnchorPane.leftAnchor="92.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="131.0">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="16.0" layoutY="152.0" text="Выпонено:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="152.0">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="finishDateChallengeInfo" layoutX="92.0" layoutY="152.0" prefHeight="21.0" prefWidth="97.0" text="(нет)" AnchorPane.leftAnchor="92.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="152.0">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Separator layoutY="272.0" prefHeight="25.0" prefWidth="273.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="272.0" />
+                                    <Label layoutX="12.0" layoutY="297.0" prefHeight="32.0" prefWidth="78.0" text="Описание:" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="181.0" AnchorPane.topAnchor="297.0">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <TextArea fx:id="challengeDescriptionInfo" layoutX="12.0" layoutY="329.0" prefHeight="182.0" prefWidth="249.0" promptText="(нет)" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="329.0" />
+                                    <Button fx:id="minusButton" layoutX="92.0" layoutY="190.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" text="-" AnchorPane.leftAnchor="92.0" AnchorPane.topAnchor="190.0">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Button>
+                                    <Label layoutX="14.0" layoutY="195.0" text="Состояние:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="195.0">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="progressChallengeLable" layoutX="130.0" layoutY="195.0" prefHeight="21.0" prefWidth="91.0" textAlignment="CENTER" AnchorPane.leftAnchor="130.0" AnchorPane.rightAnchor="52.0" AnchorPane.topAnchor="195.0">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Separator layoutY="172.0" prefHeight="25.0" prefWidth="273.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="172.0" />
+                                    <Button fx:id="plusButton" layoutX="228.0" layoutY="190.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" text="+" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="190.0">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Button>
+                                    <Label layoutX="14.0" layoutY="230.0" text="Предыдущий рекорд:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="230.0">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lastRecord" layoutX="163.0" layoutY="230.0" prefHeight="21.0" prefWidth="97.0" text="(нет)" AnchorPane.leftAnchor="170.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="230.0">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="15.0" layoutY="251.0" text="Возможный конец:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="251.0">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="probablyFinishDate" layoutX="150.0" layoutY="251.0" prefHeight="21.0" prefWidth="109.0" text="(нет)" textAlignment="RIGHT" textOverrun="CLIP" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="251.0">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="failButton" layoutX="16.0" layoutY="527.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="244.0" text="Провал((" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+                                 </children>
+                              </AnchorPane>
+                          </content>
                         </Tab>
                         <Tab fx:id="creationCategoryTab" text="New Category*">
                           <content>
@@ -167,7 +295,7 @@
                                           <Font size="15.0" />
                                        </font>
                                     </Label>
-                                    <CheckBox onAction="#enableDatePicker" fx:id="achievementHasDateCreation" layoutX="243.0" layoutY="93.0" mnemonicParsing="false" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="93.0" />
+                                    <CheckBox fx:id="achievementHasDateCreation" layoutX="243.0" layoutY="93.0" mnemonicParsing="false" onAction="#enableDatePicker" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="93.0" />
                                     <DatePicker fx:id="achievementDateCreationPicker" disable="true" layoutX="14.0" layoutY="117.0" prefHeight="25.0" prefWidth="248.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="117.0" />
                                     <Separator layoutX="4.0" layoutY="60.0" prefHeight="25.0" prefWidth="273.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0" />
                                     <Label layoutX="14.0" layoutY="142.0" prefHeight="32.0" prefWidth="187.0" text="Добавить дату окончания" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="142.0">
@@ -175,7 +303,7 @@
                                           <Font size="15.0" />
                                        </font>
                                     </Label>
-                                    <CheckBox onAction="#enableDatePicker" fx:id="achievementHasDateEnding" layoutX="243.0" layoutY="150.0" mnemonicParsing="false" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="150.0" />
+                                    <CheckBox fx:id="achievementHasDateEnding" layoutX="243.0" layoutY="150.0" mnemonicParsing="false" onAction="#enableDatePicker" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="150.0" />
                                     <DatePicker fx:id="achievementDateEndingPicker" disable="true" layoutX="13.0" layoutY="174.0" prefHeight="25.0" prefWidth="248.0" promptText="(нет)" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="174.0" />
                                     <Separator layoutX="6.0" layoutY="199.0" prefHeight="25.0" prefWidth="273.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="199.0" />
                                     <Label layoutX="14.0" layoutY="224.0" prefHeight="32.0" prefWidth="78.0" text="Описание:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="224.0">
@@ -204,7 +332,7 @@
                                           <Font size="15.0" />
                                        </font>
                                     </Label>
-                                    <CheckBox onAction="#enableDatePicker" fx:id="challengeHasDateCreation" layoutX="242.0" layoutY="93.0" mnemonicParsing="false" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="93.0" />
+                                    <CheckBox fx:id="challengeHasDateCreation" layoutX="242.0" layoutY="93.0" mnemonicParsing="false" onAction="#enableDatePicker" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="93.0" />
                                     <DatePicker fx:id="challengeDateCreationPicker" disable="true" layoutX="13.0" layoutY="117.0" prefHeight="25.0" prefWidth="248.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="117.0" />
                                     <Separator layoutY="60.0" prefHeight="25.0" prefWidth="273.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0" />
                                     <Label layoutX="14.0" layoutY="142.0" prefHeight="32.0" prefWidth="187.0" text="Добавить дату окончания" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="142.0">
@@ -212,7 +340,7 @@
                                           <Font size="15.0" />
                                        </font>
                                     </Label>
-                                    <CheckBox onAction="#enableDatePicker" fx:id="challengeHasDateEnding" layoutX="243.0" layoutY="150.0" mnemonicParsing="false" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="150.0" />
+                                    <CheckBox fx:id="challengeHasDateEnding" layoutX="243.0" layoutY="150.0" mnemonicParsing="false" onAction="#enableDatePicker" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="150.0" />
                                     <DatePicker fx:id="challengeDateEndingPicker" disable="true" layoutX="13.0" layoutY="174.0" prefHeight="25.0" prefWidth="248.0" promptText="(нет)" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="174.0" />
                                     <Separator layoutY="199.0" prefHeight="25.0" prefWidth="273.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="199.0" />
                                     <Label layoutX="14.0" layoutY="283.0" prefHeight="32.0" prefWidth="78.0" text="Описание:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="283.0">
