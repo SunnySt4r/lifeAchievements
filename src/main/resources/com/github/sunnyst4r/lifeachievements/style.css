@@ -1,11 +1,7 @@
 .tree-cell {
     -fx-padding: 2; /* 3 */
     -fx-indent: 20;
-    -fx-text-fill: rgb(30, 30, 30);
-}
-
-.tree-cell:selected{
-    -fx-text-fill: rgb(255, 255, 255);
+    -fx-text-fill: -fx-text-background-color;
 }
 
 .tree-cell-on-drag-entered-true{
