@@ -57,7 +57,10 @@ public class XMLSaver {
                 transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
 
                 //send file
-                transformer.transform(new DOMSource(dom), new StreamResult(new FileOutputStream("src/xml/1.xml")));
+                transformer.transform(
+                        new DOMSource(dom),
+                        new StreamResult(new FileOutputStream("src/xml/1.xml"))
+                );
             }catch (TransformerException | IOException e){
                 System.out.println(e.getMessage());
             }
@@ -78,13 +81,42 @@ public class XMLSaver {
             //different attributes for Achievement and Challenge
             if(item.getValue() instanceof Challenge){
                 element = dom.createElement("Challenge");
-                element.setAttribute("distance", String.valueOf(((Challenge)item.getValue()).getDistance()));
+                element.setAttribute("distance",
+                        String.valueOf(((Challenge)item.getValue()).getDistance())
+                );
+                element.setAttribute("currentStreak",
+                        String.valueOf(((Challenge)item.getValue()).getCurrentStreak())
+                );
+                element.setAttribute("attempt", String.valueOf(((Challenge)item.getValue()).getAttempt()));
+                element.setAttribute("record", String.valueOf(((Challenge)item.getValue()).getRecord()));
             }else{
                 element = dom.createElement("Achievement");
             }
             //common attributes for Achievement and Challenge
             element.setAttribute("name", item.getValue().getName());
-            element.setAttribute("creationDate", String.valueOf(((Achievement)item.getValue()).getCreatingDate().getTime()));
+            element.setAttribute("creationDate",
+                    String.valueOf(((Achievement)item.getValue()).getCreatingDate().getTime())
+            );
+            if(((Achievement)item.getValue()).getEndingDate() == null){
+                element.setAttribute("endingDate", "0");
+            }else{
+                element.setAttribute("endingDate",
+                        String.valueOf(((Achievement)item.getValue()).getEndingDate().getTime())
+                );
+            }
+            if(((Achievement)item.getValue()).getFinish() == null){
+                element.setAttribute("finish", "0");
+            }else{
+                element.setAttribute("finish",
+                        String.valueOf(((Achievement)item.getValue()).getFinish().getTime())
+                );
+            }
+            if((((Achievement) item.getValue()).isDone())) {
+                element.setAttribute("done", "1");
+            }else{
+                element.setAttribute("done", "0");
+            }
+            element.setAttribute("description", ((Achievement) item.getValue()).getDescription());
         }else{
             //item is Category
             element = dom.createElement("Category");

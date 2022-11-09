@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Achievement extends Category{
     private Date creatingDate;
-    private Date end = null;
+    private Date endingDate = null;
     private Date finish = null;
     private String description = "";
     private boolean done = false;
@@ -20,30 +20,34 @@ public class Achievement extends Category{
         this.description = description;
     }
 
-    public  Achievement(Date creatingDate, Date end, String name){
+    public  Achievement(Date creatingDate, Date endingDate, String name){
         this(creatingDate, name);
-        this.end = end;
+        this.endingDate = endingDate;
     }
 
-    public Achievement(Date creatingDate, Date end, String name, String description){
+    public Achievement(Date creatingDate, Date endingDate, String name, String description){
         this(creatingDate, name, description);
-        this.end = end;
+        this.endingDate = endingDate;
     }
 
     public Date getCreatingDate(){
         return creatingDate;
     }
 
-    public Date getEnd(){
-        return end;
+    public Date getEndingDate(){
+        return endingDate;
     }
 
     public String getDescription(){
         return description;
     }
 
-    public void setDone(){
-        done = true;
+    public void setDone(boolean done) {
+        this.done = done;
+    }
+
+    public void iAmDone(){
+        setDone(true);
         finish = Calendar.getInstance().getTime();
     }
 
@@ -54,5 +58,13 @@ public class Achievement extends Category{
     @Override
     public String toString() {
         return super.toString();
+    }
+
+    public Date getFinish() {
+        return finish;
+    }
+
+    public void setFinish(Date finish) {
+        this.finish = finish;
     }
 }

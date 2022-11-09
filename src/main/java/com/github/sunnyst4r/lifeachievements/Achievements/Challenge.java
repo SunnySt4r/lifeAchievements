@@ -62,6 +62,18 @@ public class Challenge extends Achievement{
         return attempt;
     }
 
+    public void setCurrentStreak(int currentStreak) {
+        this.currentStreak = currentStreak;
+    }
+
+    public void setRecord(int record) {
+        this.record = record;
+    }
+
+    public void setAttempt(int attempt) {
+        this.attempt = attempt;
+    }
+
     public void fail(){
         attempt++;
         if(record < currentStreak){
@@ -72,7 +84,7 @@ public class Challenge extends Achievement{
         Calendar c = Calendar.getInstance();
         c.setTime(start);
         c.add(Calendar.DATE, distance);
-        if(c.getTime().after(getEnd())){
+        if(c.getTime().after(getEndingDate())){
             System.out.println("Вы не сможете уложиться до конечного дня.\n Переставить конечный день?");
         }
     }
@@ -80,7 +92,7 @@ public class Challenge extends Achievement{
     public void pass(){
         currentStreak++;
         if(currentStreak == distance){
-            this.setDone();
+            this.iAmDone();
         }
     }
 

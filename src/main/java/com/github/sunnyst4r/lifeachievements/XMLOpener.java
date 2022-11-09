@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Calendar;
+import java.util.Date;
 
 public class XMLOpener {
     private final TreeView<Category> treeView;
@@ -83,23 +84,54 @@ public class XMLOpener {
         }else{
             //element is Achievement or Challenge
 
-            //parse creation date
+            //create calendar for parse date
             Calendar c = Calendar.getInstance();
+
+            //parse creation date
             c.setTimeInMillis(Long.parseLong(element.getAttribute("creationDate")));
+            Date creationDate = c.getTime();
+            //parse ending date
+            Date endingDate = null;
+            if(!element.getAttribute("endingDate").equals("0")){
+                c.setTimeInMillis(Long.parseLong(element.getAttribute("endingDate")));
+                endingDate = c.getTime();
+            }
+            //parse finish
+            Date finish = null;
+            if(!element.getAttribute("finish").equals("0")){
+                c.setTimeInMillis(Long.parseLong(element.getAttribute("finish")));
+                finish = c.getTime();
+            }
+            //parse description
+            String description = element.getAttribute("description");
+            //parse done
+            boolean done = element.getAttribute("done").equals("1");
+
             if(element.getTagName().equals("Challenge")){
                 //add new challenge from attributes
                 Challenge challenge = new Challenge(
-                        c.getTime(),
+                        creationDate,
+                        endingDate,
                         element.getAttribute("name"),
+                        description,
                         Integer.parseInt(element.getAttribute("distance"))
                 );
+                challenge.setAttempt(Integer.parseInt(element.getAttribute("attempt")));
+                challenge.setRecord(Integer.parseInt(element.getAttribute("record")));
+                challenge.setCurrentStreak(Integer.parseInt(element.getAttribute("currentStreak")));
+                challenge.setFinish(finish);
+                challenge.setDone(done);
                 item = new TreeItem<>(challenge, new Label(index));
             }else{
                 //add new achievement from attributes
                 Achievement achievement = new Achievement(
-                        c.getTime(),
-                        element.getAttribute("name")
+                        creationDate,
+                        endingDate,
+                        element.getAttribute("name"),
+                        description
                 );
+                achievement.setFinish(finish);
+                achievement.setDone(done);
                 item = new TreeItem<>(achievement, new Label(index));
             }
         }
