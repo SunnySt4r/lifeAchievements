@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Category name="Ачивки">
     <Category name="Книги">
-        <Achievement creationDate="1666906261300" name="Позаниматься"/>
-        <Achievement creationDate="1666906262420" name="Съесть мармеладки"/>
-        <Achievement creationDate="1666906258531" name="Поделать домашку"/>
-        <Achievement creationDate="1666906260226" name="Съесть мармеладки"/>
-        <Achievement creationDate="1666906262956" name="Сделать оригами"/>
+        <Achievement creationDate="1666906261300" endingDate="0" finish="0" done="0" description="" name="Позаниматься"/>
+        <Achievement creationDate="1666906262420" endingDate="0" finish="0" done="0" description="" name="Съесть мармеладки"/>
+        <Achievement creationDate="1666906258531" endingDate="0" finish="0" done="0" description="" name="Поделать домашку"/>
+        <Achievement creationDate="1666906260226" endingDate="0" finish="0" done="0" description="" name="Съесть мармеладки"/>
+        <Achievement creationDate="1666906262956" endingDate="0" finish="0" done="0" description="" name="Сделать оригами"/>
         <Category name="Что-то важное">
-            <Achievement creationDate="1666906255525" name="Позаниматься"/>
-            <Achievement creationDate="1666906259658" name="Сделать оригами"/>
-            <Achievement creationDate="1666906260781" name="Сделать оригами"/>
-            <Achievement creationDate="1666906256233" name="Позаниматься"/>
-            <Achievement creationDate="1666906239308" name="сделать дела"/>
-            <Achievement creationDate="1666906257957" name="Сделать оригами"/>
+            <Achievement creationDate="1666906255525" endingDate="0" finish="0" done="0" description="" name="Позаниматься"/>
+            <Achievement creationDate="1666906259658" endingDate="0" finish="0" done="0" description="" name="Сделать оригами"/>
+            <Achievement creationDate="1666906260781" endingDate="0" finish="0" done="0" description="" name="Сделать оригами"/>
+            <Achievement creationDate="1666906256233" endingDate="0" finish="0" done="0" description="" name="Позаниматься"/>
+            <Achievement creationDate="1666906239308" endingDate="0" finish="0" done="0" description="" name="сделать дела"/>
+            <Achievement creationDate="1666906257957" endingDate="0" finish="0" done="0" description="" name="Сделать оригами"/>
             <Category name="Книги художественные">
-                <Challenge creationDate="1666906239331" distance="100" name="челендж 1"/>
-                <Achievement creationDate="1666906263461" name="Покушать"/>
-                <Achievement creationDate="1666906259078" name="Позаниматься"/>
-                <Achievement creationDate="1666906257394" name="Сделать оригами"/>
+                <Challenge creationDate="1666906239331" distance="100" endingDate="0" finish="0" done="0" description="" attempt="1" record="0" currentStreak="0" name="челендж 1"/>
+                <Achievement creationDate="1666906263461" endingDate="0" finish="0" done="0" description="" name="Покушать"/>
+                <Achievement creationDate="1666906259078" endingDate="0" finish="0" done="0" description="" name="Позаниматься"/>
+                <Achievement creationDate="1666906257394" endingDate="0" finish="0" done="0" description="" name="Сделать оригами"/>
             </Category>
         </Category>
-        <Achievement creationDate="1666906239331" name="написать программу"/>
+        <Achievement creationDate="1666906239331" endingDate="0" finish="0" done="0" description="" name="написать программу"/>
     </Category>
-    <Achievement creationDate="1666906256795" name="Поделать домашку"/>
-    <Achievement creationDate="1666906261805" name="Позаниматься"/>
-    <Achievement creationDate="1666906264030" name="Пописать код"/>
-    <Achievement creationDate="1666906264766" name="Съесть мармеладки"/>
+    <Achievement creationDate="1666906256795" endingDate="0" finish="0" done="0" description="" name="Поделать домашку"/>
+    <Achievement creationDate="1666906261805" endingDate="0" finish="0" done="0" description="" name="Позаниматься"/>
+    <Achievement creationDate="1666906264030" endingDate="0" finish="0" done="0" description="" name="Пописать код"/>
+    <Achievement creationDate="1666906264766" endingDate="0" finish="0" done="0" description="" name="Съесть мармеладки"/>
 </Category>
