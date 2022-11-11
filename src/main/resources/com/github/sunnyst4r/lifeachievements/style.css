@@ -4,6 +4,16 @@
     -fx-text-fill: -fx-text-background-color;
 }
 
+.tree-cell:category{
+    -fx-underline: true;
+    -fx-text-fill: blue;
+}
+
+.tree-cell:done{
+    -fx-text-fill: rgb(30, 30, 30);;
+    -fx-background: rgba(0,255,0,0.2);
+}
+
 .tree-cell-on-drag-entered-true{
     -fx-background: rgba(0,255,0,0.4);
     -fx-border: solid 2px;
@@ -16,15 +26,6 @@
     -fx-border: solid 2px;
     -fx-border-color: red;
     -fx-text-fill: rgb(255,255,255);
-}
-
-.tree-cell:category{
-    -fx-underline: true;
-    -fx-text-fill: blue;
-}
-
-.tree-cell:done{
-    -fx-text-fill: green;
 }
 
 .tree-cell > .tree-disclosure-node > .arrow{

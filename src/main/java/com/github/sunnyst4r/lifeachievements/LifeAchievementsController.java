@@ -7,6 +7,7 @@ import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.input.*;
 
@@ -128,8 +129,6 @@ public class LifeAchievementsController implements Initializable {
     @FXML
     private Label lastRecord;
     @FXML
-    private Label probablyFinishDate;
-    @FXML
     private Button failButton;
 
     //add pseudo class for tree-cell
@@ -162,6 +161,7 @@ public class LifeAchievementsController implements Initializable {
                         setGraphic(null);
                         //set pseudo class category to false
                         pseudoClassStateChanged(CATEGORY, false);
+                        pseudoClassStateChanged(DONE, false);
                     }else{
                         //set Label into graphic of cell
                         setGraphic(getTreeItem().getGraphic());
@@ -228,6 +228,8 @@ public class LifeAchievementsController implements Initializable {
         //if target isn't null and isn't source we set one of two style
         TreeCell<Category> target = (TreeCell<Category>) dragEvent.getTarget();
         if(target != source && target.getTreeItem() != null){
+            target.pseudoClassStateChanged(CATEGORY, false);
+            target.pseudoClassStateChanged(DONE, false);
             //if we can drop element into target we highlight green, else - red
             if(!(target.getTreeItem().getValue() instanceof Achievement)
                     && !checkIsChild(target.getTreeItem(), source.getTreeItem())){
@@ -247,6 +249,13 @@ public class LifeAchievementsController implements Initializable {
         if(target != source){
             target.getStyleClass().remove("tree-cell-on-drag-entered-false");
             target.getStyleClass().remove("tree-cell-on-drag-entered-true");
+
+            if(target.getTreeItem().getValue() != null){
+                target.pseudoClassStateChanged(CATEGORY, !(target.getTreeItem().getValue() instanceof Achievement));
+                if(target.getTreeItem().getValue() instanceof Achievement achievement){
+                    target.pseudoClassStateChanged(DONE, achievement.isDone());
+                }
+            }
         }
         dragEvent.consume();
     }
@@ -281,37 +290,86 @@ public class LifeAchievementsController implements Initializable {
 
         TreeItem<Category> item = treeView.getSelectionModel().getSelectedItem();
         if(item != null){
-            //change information tabs Achievement or Category
-            if(item.getValue() instanceof Achievement){
-                //replace if other type of tab or size=0
-                if(informationTabPane.getTabs().size()==0
-                        || !informationTabPane.getTabs().get(0).equals(achievementTab)){
-                    informationTabPane.getTabs().clear();
-                    informationTabPane.getTabs().add(achievementTab);
+            //change information tabs Achievement, Challenge or Category
+            createTab(new ActionEvent());
+            if(item.getValue() instanceof Challenge challenge){
+                challengeNameInfo.setText(challenge.getName());
+                //set progress bar
+                progressChallenge.setProgress(
+                        challenge.getCurrentStreak() / (float) challenge.getDistance()
+                );
+                //set creation date
+                creationDateChallengeInfo.setText(String.valueOf(
+                        LocalDate.ofInstant(challenge.getCreatingDate().toInstant(), ZoneId.systemDefault())
+                ));
+                //set ending date
+                if(challenge.getEndingDate() != null){
+                    endingDateChallengeInfo.setText(String.valueOf(
+                            LocalDate.ofInstant(challenge.getEndingDate().toInstant(), ZoneId.systemDefault())
+                    ));
+                }else{
+                    endingDateChallengeInfo.setText("(нет)");
                 }
-                achievementNameInfo.setText(item.getValue().getName());
+                //set finish date
+                if(challenge.getFinish() != null){
+                    finishDateChallengeInfo.setText(String.valueOf(
+                            LocalDate.ofInstant(challenge.getFinish().toInstant(), ZoneId.systemDefault())
+                    ));
+                }else{
+                    finishDateChallengeInfo.setText("(нет)");
+                }
+                //set description
+                challengeDescriptionInfo.setText(challenge.getDescription());
+                //set current streak or progress
+                progressChallengeLable.setText(challenge.getCurrentStreak() + " / " + challenge.getDistance());
+                progressChallengeLable.setAlignment(Pos.BASELINE_CENTER);
+                //set record
+                lastRecord.setText(String.valueOf(challenge.getRecord()));
+
+            }else if(item.getValue() instanceof Achievement achievement){
+                achievementNameInfo.setText(achievement.getName());
+                isDoneAchievement.setSelected(achievement.isDone());
+                progressAchievement.setProgress(achievement.isDone()? 1:0);
+                //set creation date
+                creationDateAchievementInfo.setText(String.valueOf(
+                        LocalDate.ofInstant(achievement.getCreatingDate().toInstant(), ZoneId.systemDefault())
+                ));
+                achievementDescriptionInfo.setText(achievement.getDescription());
+                //set ending date
+                if(achievement.getEndingDate() != null){
+                    endingDateAchievementInfo.setText(String.valueOf(
+                            LocalDate.ofInstant(achievement.getEndingDate().toInstant(), ZoneId.systemDefault())
+                    ));
+                }else{
+                    endingDateAchievementInfo.setText("(нет)");
+                }
+                //set finish date
+                if(achievement.getFinish() != null){
+                    finishDateAchievementInfo.setText(String.valueOf(
+                            LocalDate.ofInstant(achievement.getFinish().toInstant(), ZoneId.systemDefault())
+                    ));
+                }else{
+                    finishDateAchievementInfo.setText("(нет)");
+                }
             }else{
-                //replace if other type of tab or size=0
-                if(informationTabPane.getTabs().size()==0
-                        || !informationTabPane.getTabs().get(0).equals(categoryTab)){
-                    informationTabPane.getTabs().clear();
-                    informationTabPane.getTabs().add(categoryTab);
-                }
-                int size = countChildren(item);
+                int size = countChildren(item, false);
                 categoryNameInfo.setText(item.getValue().toString());
                 countAchievements.setText(String.valueOf(size));
+                progressCategory.setProgress(
+                        countChildren(item, true) / (float) countChildren(item, false)
+                );
             }
         }
     }
 
-    private int countChildren(TreeItem<Category> treeItem){
+    private int countChildren(TreeItem<Category> treeItem, boolean onlyDone){
         //count all Achievement or Challenge in one Category
         if(treeItem.getValue() instanceof Achievement){
-            return 1;
+            return onlyDone? (((Achievement) treeItem.getValue()).isDone()? 1:0):1;
         }else{
             int size = 0;
             for(TreeItem<Category> item : treeItem.getChildren()){
-                size += countChildren(item);
+                size += countChildren(item, onlyDone);
             }
             return size;
         }
@@ -367,13 +425,27 @@ public class LifeAchievementsController implements Initializable {
 
     public void createTab(ActionEvent actionEvent) {
         //create tab of creation on the right side of scene
-        Tab tab;
-        if(((MenuItem) actionEvent.getSource()).getId().equals("0")){
-            tab = creationCategoryTab;
-        }else if(((MenuItem) actionEvent.getSource()).getId().equals("1")) {
-            tab = creationAchievementTab;
-        }else{
-            tab = creationChallengeTab;
+        Tab tab = new Tab();
+        //add information tabs
+        if(treeView.getSelectionModel().getSelectedItem() != null){
+            TreeItem<Category> item = treeView.getSelectionModel().getSelectedItem();
+            if(item.getValue() instanceof Challenge){
+                tab = challengeTab;
+            }else if(item.getValue() instanceof Achievement){
+                tab = achievementTab;
+            }else{
+                tab = categoryTab;
+            }
+        }
+        //add creation tabs
+        if(actionEvent.getSource() instanceof MenuItem){
+            if(((MenuItem) actionEvent.getSource()).getId().equals("0")){
+                tab = creationCategoryTab;
+            }else if(((MenuItem) actionEvent.getSource()).getId().equals("1")) {
+                tab = creationAchievementTab;
+            }else if(((MenuItem) actionEvent.getSource()).getId().equals("2")){
+                tab = creationChallengeTab;
+            }
         }
         //if side TabPane is clear or have another tab of creation, we clear and add new tab
         if(informationTabPane.getTabs().size()==0
@@ -532,5 +604,39 @@ public class LifeAchievementsController implements Initializable {
         challengeDistance.getValueFactory().setValue(START_VALUE);
         //rename all lable
         renameLabel(treeView.getRoot(), "");
+    }
+
+    public void changeChallengeProgress(ActionEvent actionEvent) {
+        Challenge challenge = (Challenge) treeView.getSelectionModel().getSelectedItem().getValue();
+        if(actionEvent.getSource().equals(minusButton)){
+            if(challenge.getCurrentStreak() > 0){
+                challenge.setCurrentStreak(challenge.getCurrentStreak() - 1);
+                if(challenge.getDistance() - challenge.getCurrentStreak() == 1){
+                    challenge.setFinish(null);
+                    challenge.setDone(false);
+                }
+            }
+        }else if(actionEvent.getSource().equals(plusButton)){
+            if(challenge.getCurrentStreak()<challenge.getDistance()){
+                challenge.setCurrentStreak(challenge.getCurrentStreak() + 1);
+                if(challenge.getCurrentStreak() == challenge.getDistance()){
+                    challenge.iAmDone();
+                }
+            }
+        }
+        selectItem();
+    }
+
+    public void doneAchievement(ActionEvent actionEvent) {
+        Achievement achievement = (Achievement) treeView.getSelectionModel().getSelectedItem().getValue();
+        if(actionEvent.getSource().equals(isDoneAchievement)){
+            if(isDoneAchievement.isSelected()){
+                achievement.iAmDone();
+            }else{
+                achievement.setDone(false);
+                achievement.setFinish(null);
+            }
+        }
+        selectItem();
     }
 }
