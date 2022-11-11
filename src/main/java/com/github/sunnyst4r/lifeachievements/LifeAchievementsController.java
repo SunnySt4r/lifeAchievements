@@ -121,7 +121,7 @@ public class LifeAchievementsController implements Initializable {
     @FXML
     private TextArea challengeDescriptionInfo;
     @FXML
-    private Label progressChallengeLable;
+    private Label progressChallengeLabel;
     @FXML
     private Button minusButton;
     @FXML
@@ -145,7 +145,7 @@ public class LifeAchievementsController implements Initializable {
         );
 
         //load file that we saved before
-        (new XMLOpener(treeView)).open("src/xml/1.xml");
+        (new XMLOpener(treeView)).open("src/xml/2.xml");
 
         //create new cell factory for pseudo class and drag & drop
         treeView.setCellFactory(tv -> {
@@ -172,6 +172,8 @@ public class LifeAchievementsController implements Initializable {
                         //set if isDone
                         if(item instanceof Achievement achievement){
                             pseudoClassStateChanged(DONE, achievement.isDone());
+                        }else{
+                            pseudoClassStateChanged(DONE, false);
                         }
                     }
                 }
@@ -278,7 +280,7 @@ public class LifeAchievementsController implements Initializable {
             source.getTreeItem().getParent().getChildren().remove(source.getTreeItem());
             targetNode.getChildren().add(source.getTreeItem());
 
-            //rename all Lable in TreeItem after dropping into other place
+            //rename all Label in TreeItem after dropping into other place
             renameLabel(treeView.getRoot(), "");
         }
         dragEvent.setDropCompleted(true);
@@ -321,8 +323,8 @@ public class LifeAchievementsController implements Initializable {
                 //set description
                 challengeDescriptionInfo.setText(challenge.getDescription());
                 //set current streak or progress
-                progressChallengeLable.setText(challenge.getCurrentStreak() + " / " + challenge.getDistance());
-                progressChallengeLable.setAlignment(Pos.BASELINE_CENTER);
+                progressChallengeLabel.setText(challenge.getCurrentStreak() + " / " + challenge.getDistance());
+                progressChallengeLabel.setAlignment(Pos.BASELINE_CENTER);
                 //set record
                 lastRecord.setText(String.valueOf(challenge.getRecord()));
 
@@ -393,7 +395,7 @@ public class LifeAchievementsController implements Initializable {
 
     private void renameLabel(TreeItem<Category> item, String index){
         //first call is renameLabel(root, "")
-        //rename all Lable in order like in example (1.1.4 or 2.5.10.2)
+        //rename all Label in order like in example (1.1.4 or 2.5.10.2)
         for(int i=0; i<item.getChildren().size(); i++){
             //check is first row children in root or not
             String text = index;
@@ -420,7 +422,7 @@ public class LifeAchievementsController implements Initializable {
 
     public void openXMLFile() {
         //open xml file as TreeView
-        (new XMLOpener(treeView)).open("src/xml/1.xml");
+        (new XMLOpener(treeView)).open("src/xml/2.xml");
     }
 
     public void createTab(ActionEvent actionEvent) {
@@ -602,7 +604,7 @@ public class LifeAchievementsController implements Initializable {
         challengeDateEndingPicker.getEditor().setText("(нет)");
             //distance
         challengeDistance.getValueFactory().setValue(START_VALUE);
-        //rename all lable
+        //rename all label
         renameLabel(treeView.getRoot(), "");
     }
 

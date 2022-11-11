@@ -59,7 +59,7 @@ public class XMLSaver {
                 //send file
                 transformer.transform(
                         new DOMSource(dom),
-                        new StreamResult(new FileOutputStream("src/xml/1.xml"))
+                        new StreamResult(new FileOutputStream("src/xml/2.xml"))
                 );
             }catch (TransformerException | IOException e){
                 System.out.println(e.getMessage());

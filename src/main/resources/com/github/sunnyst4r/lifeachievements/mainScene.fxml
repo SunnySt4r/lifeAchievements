@@ -228,7 +228,7 @@
                                           <Font size="15.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="progressChallengeLable" layoutX="130.0" layoutY="195.0" prefHeight="21.0" prefWidth="91.0" textAlignment="CENTER" AnchorPane.leftAnchor="130.0" AnchorPane.rightAnchor="52.0" AnchorPane.topAnchor="195.0">
+                                    <Label fx:id="progressChallengeLabel" layoutX="130.0" layoutY="195.0" prefHeight="21.0" prefWidth="91.0" textAlignment="CENTER" AnchorPane.leftAnchor="130.0" AnchorPane.rightAnchor="52.0" AnchorPane.topAnchor="195.0">
                                        <font>
                                           <Font size="15.0" />
                                        </font>
