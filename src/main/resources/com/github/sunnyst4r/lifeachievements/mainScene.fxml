@@ -27,11 +27,6 @@
          <menus>
             <Menu mnemonicParsing="false" text="File">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Close" />
-               </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Edit">
-               <items>
                   <MenuItem mnemonicParsing="false" onAction="#openXMLFile" text="Open" />
                   <MenuItem mnemonicParsing="false" onAction="#saveXMLFile" text="Save" />
                </items>

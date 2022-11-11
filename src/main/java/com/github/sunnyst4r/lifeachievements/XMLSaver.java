@@ -27,7 +27,7 @@ public class XMLSaver {
         this.treeView = treeView;
     }
 
-    public void save(){
+    public void save(String xml){
         //save 1.xml from TreeView
 
         Document dom;
@@ -59,7 +59,7 @@ public class XMLSaver {
                 //send file
                 transformer.transform(
                         new DOMSource(dom),
-                        new StreamResult(new FileOutputStream("src/xml/2.xml"))
+                        new StreamResult(new FileOutputStream(xml))
                 );
             }catch (TransformerException | IOException e){
                 System.out.println(e.getMessage());

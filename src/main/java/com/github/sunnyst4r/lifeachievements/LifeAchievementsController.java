@@ -417,7 +417,7 @@ public class LifeAchievementsController implements Initializable {
 
     public void saveXMLFile() {
         //save TreeView as xml file
-        (new XMLSaver(treeView)).save();
+        (new XMLSaver(treeView)).save("src/xml/2.xml");
     }
 
     public void openXMLFile() {
