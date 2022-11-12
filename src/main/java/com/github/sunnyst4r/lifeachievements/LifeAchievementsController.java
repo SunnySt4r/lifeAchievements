@@ -145,7 +145,7 @@ public class LifeAchievementsController implements Initializable {
         );
 
         //load file that we saved before
-        (new XMLOpener(treeView)).open("src/xml/2.xml");
+        (new XMLOpener(treeView)).open("xml/2.xml");
 
         //create new cell factory for pseudo class and drag & drop
         treeView.setCellFactory(tv -> {
@@ -417,12 +417,12 @@ public class LifeAchievementsController implements Initializable {
 
     public void saveXMLFile() {
         //save TreeView as xml file
-        (new XMLSaver(treeView)).save("src/xml/2.xml");
+        (new XMLSaver(treeView)).save("xml/2.xml");
     }
 
     public void openXMLFile() {
         //open xml file as TreeView
-        (new XMLOpener(treeView)).open("src/xml/2.xml");
+        (new XMLOpener(treeView)).open("xml/2.xml");
     }
 
     public void createTab(ActionEvent actionEvent) {
