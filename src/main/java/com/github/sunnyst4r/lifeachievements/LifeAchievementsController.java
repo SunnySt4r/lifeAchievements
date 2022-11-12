@@ -131,6 +131,11 @@ public class LifeAchievementsController implements Initializable {
     @FXML
     private Button failButton;
 
+    //context menu and its items
+    private final ContextMenu contextMenu = new ContextMenu();
+    private final MenuItem deleteItemContext = new MenuItem("Delete");
+    private TreeItem<Category> deleteTarget;
+
     //add pseudo class for tree-cell
     private final PseudoClass CATEGORY = PseudoClass.getPseudoClass("category");
     private final PseudoClass DONE = PseudoClass.getPseudoClass("done");
@@ -146,6 +151,10 @@ public class LifeAchievementsController implements Initializable {
 
         //load file that we saved before
         (new XMLOpener(treeView)).open("xml/2.xml");
+
+        //create context menu for treeView
+        contextMenu.getItems().add(deleteItemContext);
+        deleteItemContext.setOnAction(this::deleteItem);
 
         //create new cell factory for pseudo class and drag & drop
         treeView.setCellFactory(tv -> {
@@ -184,6 +193,13 @@ public class LifeAchievementsController implements Initializable {
             treeCell.setOnDragEntered(this::onDragEntered);
             treeCell.setOnDragExited(this::onDragExited);
             treeCell.setOnDragDropped(this::onDragDropped);
+            //set context menu handler
+            treeCell.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+                if(mouseEvent.getButton() == MouseButton.SECONDARY && treeCell.getTreeItem() != null){
+                    deleteTarget = treeCell.getTreeItem();
+                    contextMenu.show(treeCell, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+                }
+            });
 
             return treeCell;
         });
@@ -195,6 +211,11 @@ public class LifeAchievementsController implements Initializable {
         //add spinner value factory into spinner
         challengeDistance.setValueFactory(spinnerValueFactory);
         //rename all index
+        renameLabel(treeView.getRoot(), "");
+    }
+
+    private void deleteItem(ActionEvent actionEvent) {
+        deleteTarget.getParent().getChildren().remove(deleteTarget);
         renameLabel(treeView.getRoot(), "");
     }
 
