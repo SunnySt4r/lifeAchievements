@@ -633,18 +633,11 @@ public class LifeAchievementsController implements Initializable {
         Challenge challenge = (Challenge) treeView.getSelectionModel().getSelectedItem().getValue();
         if(actionEvent.getSource().equals(minusButton)){
             if(challenge.getCurrentStreak() > 0){
-                challenge.setCurrentStreak(challenge.getCurrentStreak() - 1);
-                if(challenge.getDistance() - challenge.getCurrentStreak() == 1){
-                    challenge.setFinish(null);
-                    challenge.setDone(false);
-                }
+                challenge.pass(-1);
             }
         }else if(actionEvent.getSource().equals(plusButton)){
             if(challenge.getCurrentStreak()<challenge.getDistance()){
-                challenge.setCurrentStreak(challenge.getCurrentStreak() + 1);
-                if(challenge.getCurrentStreak() == challenge.getDistance()){
-                    challenge.iAmDone();
-                }
+                challenge.pass(1);
             }
         }
         selectItem();
@@ -661,5 +654,13 @@ public class LifeAchievementsController implements Initializable {
             }
         }
         selectItem();
+    }
+
+    public void failChallenge(ActionEvent actionEvent) {
+        if(actionEvent.getSource().equals(failButton)){
+            Challenge challenge = (Challenge) treeView.getSelectionModel().getSelectedItem().getValue();
+            challenge.fail();
+            selectItem();
+        }
     }
 }

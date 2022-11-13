@@ -84,15 +84,19 @@ public class Challenge extends Achievement{
         Calendar c = Calendar.getInstance();
         c.setTime(start);
         c.add(Calendar.DATE, distance);
-        if(c.getTime().after(getEndingDate())){
+        if(getEndingDate() != null && c.getTime().after(getEndingDate())){
             System.out.println("Вы не сможете уложиться до конечного дня.\n Переставить конечный день?");
         }
     }
 
-    public void pass(){
-        currentStreak++;
+    public void pass(int step){
+        currentStreak += step;
         if(currentStreak == distance){
             this.iAmDone();
+        }
+        if(step<0 && distance-currentStreak==1){
+            setFinish(null);
+            setDone(false);
         }
     }
 

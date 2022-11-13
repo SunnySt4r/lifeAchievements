@@ -244,7 +244,7 @@
                                           <Font size="15.0" />
                                        </font>
                                     </Label>
-                                    <Button fx:id="failButton" layoutX="16.0" layoutY="527.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="244.0" text="Провал((" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+                                    <Button onAction="#failChallenge" fx:id="failButton" layoutX="16.0" layoutY="527.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="244.0" text="Провал((" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" />
                                  </children>
                               </AnchorPane>
                           </content>
