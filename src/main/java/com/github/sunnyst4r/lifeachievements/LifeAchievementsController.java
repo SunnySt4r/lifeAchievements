@@ -10,7 +10,10 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.input.*;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
+import java.io.File;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -216,7 +219,9 @@ public class LifeAchievementsController implements Initializable {
 
     private void deleteItem(ActionEvent actionEvent) {
         deleteTarget.getParent().getChildren().remove(deleteTarget);
+        deleteTarget.setValue(null);
         renameLabel(treeView.getRoot(), "");
+        clearAndDisableAll();
     }
 
     private void onDragDetected(MouseEvent event) {
@@ -437,13 +442,46 @@ public class LifeAchievementsController implements Initializable {
     }
 
     public void saveXMLFile() {
+        //Creating a File chooser
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save File");
+        fileChooser.setInitialDirectory(new File("xml"));
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("XML", "*.xml"));
+
         //save TreeView as xml file
-        (new XMLSaver(treeView)).save("xml/2.xml");
+        (new XMLSaver(treeView)).save(String.valueOf(fileChooser.showSaveDialog(new Stage())));
     }
 
     public void openXMLFile() {
+        //Creating a File chooser
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(new File("xml"));
+        fileChooser.setTitle("Select File");
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("XML", "*.xml"));
+
         //open xml file as TreeView
-        (new XMLOpener(treeView)).open("xml/2.xml");
+        (new XMLOpener(treeView)).open(String.valueOf(fileChooser.showOpenDialog(new Stage())));
+        clearAndDisableAll();
+    }
+
+    public void createNewFile(){
+        //creating an empty file
+        TreeView<Category> newTreeView = new TreeView<>();
+        TreeItem<Category> newRoot = new TreeItem<>(new Category("Ачивки"));
+        newTreeView.setRoot(newRoot);
+        newTreeView.setShowRoot(false);
+        newRoot.setExpanded(true);
+        //Creating a File chooser
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save File");
+        fileChooser.setInitialDirectory(new File("xml"));
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("XML", "*.xml"));
+
+        //save TreeView as xml file
+        File file = fileChooser.showSaveDialog(new Stage());
+        (new XMLSaver(newTreeView)).save(String.valueOf(file));
+        clearAndDisableAll();
+        (new XMLOpener(treeView)).open(String.valueOf(file));
     }
 
     public void createTab(ActionEvent actionEvent) {
@@ -494,7 +532,8 @@ public class LifeAchievementsController implements Initializable {
         //parent TreeItem
             //root item by default
         TreeItem<Category> parent = treeView.getRoot();
-        if (treeView.getSelectionModel().getSelectedItem() != null) {
+        if (treeView.getSelectionModel().getSelectedItem() != null
+                && treeView.getSelectionModel().getSelectedItem().getValue() != null) {
             //if selected item is achievement or challenge,then parent is his parent
             if(treeView.getSelectionModel().getSelectedItem().getValue() instanceof Achievement){
                 parent = treeView.getSelectionModel().getSelectedItem().getParent();
@@ -520,10 +559,14 @@ public class LifeAchievementsController implements Initializable {
                 name = achievementName.getText();
                 //check datePickers not null
                 if (achievementHasDateCreation.isSelected()){
-                    creationDate = Date.from(achievementDateCreationPicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+                    creationDate = Date.from(
+                            achievementDateCreationPicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()
+                    );
                 }
                 if (achievementHasDateEnding.isSelected()) {
-                    endDate = Date.from(achievementDateEndingPicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+                    endDate = Date.from(
+                            achievementDateEndingPicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()
+                    );
                 }
                 description = achievementDescription.getText();
                 //check necessary params not null
@@ -538,10 +581,14 @@ public class LifeAchievementsController implements Initializable {
                 name = challengeName.getText();
                 //check datePickers not null
                 if (challengeHasDateCreation.isSelected()){
-                    creationDate = Date.from(challengeDateCreationPicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+                    creationDate = Date.from(
+                            challengeDateCreationPicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()
+                    );
                 }
                 if (challengeHasDateEnding.isSelected()) {
-                    endDate = Date.from(challengeDateEndingPicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+                    endDate = Date.from(
+                            challengeDateEndingPicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()
+                    );
                 }
                 description = challengeDescription.getText();
                 distance = challengeDistance.getValue();
@@ -625,6 +672,8 @@ public class LifeAchievementsController implements Initializable {
         challengeDateEndingPicker.getEditor().setText("(нет)");
             //distance
         challengeDistance.getValueFactory().setValue(START_VALUE);
+        //close information and creation tabs
+        informationTabPane.getTabs().clear();
         //rename all label
         renameLabel(treeView.getRoot(), "");
     }
