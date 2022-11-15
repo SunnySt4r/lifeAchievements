@@ -25,7 +25,6 @@ public class XMLOpener {
     private final TreeView<Category> treeView;
 
     //config
-    private final String configPath = "src/main/resources/com/github/sunnyst4r/lifeachievements/config.properties";
     private final Properties config = new Properties();
 
     public XMLOpener(TreeView<Category> treeView){
@@ -37,7 +36,7 @@ public class XMLOpener {
 
         //initialize properties file
         try {
-            config.load(new FileInputStream(configPath));
+            config.load(new FileInputStream("config/config.properties"));
         }catch (IOException e){
             System.out.println(e.getMessage());
         }
@@ -53,7 +52,10 @@ public class XMLOpener {
             String path = "xml/" + Calendar.getInstance().getTime().getTime() + ".xml";
             config.setProperty("last_file_path", path);
             try {
-                config.store(new FileOutputStream(configPath), "auto-generated properties");
+                config.store(
+                        new FileOutputStream("config/config.properties"),
+                        "auto-generated properties"
+                );
             }catch (IOException e){
                 System.out.println(e.getMessage());
             }

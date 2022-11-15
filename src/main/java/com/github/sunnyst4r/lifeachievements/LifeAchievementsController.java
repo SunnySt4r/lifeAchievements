@@ -13,10 +13,7 @@ import javafx.scene.input.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -144,7 +141,6 @@ public class LifeAchievementsController implements Initializable {
     private final PseudoClass DONE = PseudoClass.getPseudoClass("done");
 
     //config
-    private final String configPath = "src/main/resources/com/github/sunnyst4r/lifeachievements/config.properties";
     private final Properties config = new Properties();
     private String lastFilePath;
 
@@ -158,9 +154,8 @@ public class LifeAchievementsController implements Initializable {
         );
 
         //set properties file
-        System.out.println(configPath);
         try {
-            config.load(new FileInputStream(configPath));
+            config.load(new FileInputStream("config/config.properties"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -436,21 +431,23 @@ public class LifeAchievementsController implements Initializable {
     private void renameLabel(TreeItem<Category> item, String index){
         //first call is renameLabel(root, "")
         //rename all Label in order like in example (1.1.4 or 2.5.10.2)
-        for(int i=0; i<item.getChildren().size(); i++){
-            //check is first row children in root or not
-            String text = index;
-            if(index.equals("")){
-                text += (i+1);
-            }else{
-                text += "." + (i+1);
-            }
-            //replace text in Label
-            if(item.getChildren().get(i).getGraphic() instanceof Label){
-                ((Label) item.getChildren().get(i).getGraphic()).setText(text);
-            }
-            //if Category, then rename all Label in it
-            if(!(item.getChildren().get(i).getValue() instanceof Achievement)){
-                renameLabel(item.getChildren().get(i), text);
+        if(item != null){
+            for(int i=0; i<item.getChildren().size(); i++){
+                //check is first row children in root or not
+                String text = index;
+                if(index.equals("")){
+                    text += (i+1);
+                }else{
+                    text += "." + (i+1);
+                }
+                //replace text in Label
+                if(item.getChildren().get(i).getGraphic() instanceof Label){
+                    ((Label) item.getChildren().get(i).getGraphic()).setText(text);
+                }
+                //if Category, then rename all Label in it
+                if(!(item.getChildren().get(i).getValue() instanceof Achievement)){
+                    renameLabel(item.getChildren().get(i), text);
+                }
             }
         }
     }
@@ -485,7 +482,10 @@ public class LifeAchievementsController implements Initializable {
         lastFilePath = "xml/" + file.substring(file.lastIndexOf("\\") + 1);
         config.setProperty("last_file_path", lastFilePath);
         try {
-            config.store(new FileOutputStream(configPath), "auto-generated properties");
+            config.store(
+                    new FileOutputStream("config/config.properties"),
+                    "auto-generated properties"
+            );
         }catch (IOException e){
             System.out.println(e.getMessage());
         }
@@ -505,11 +505,21 @@ public class LifeAchievementsController implements Initializable {
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("XML", "*.xml"));
 
         //save TreeView as xml file
-        File file = fileChooser.showSaveDialog(new Stage());
-        (new XMLSaver(newTreeView)).save(String.valueOf(file));
+        String file = String.valueOf(fileChooser.showSaveDialog(new Stage()));
+        (new XMLSaver(newTreeView)).save(file);
         clearAndDisableAll();
-        (new XMLOpener(treeView)).open(String.valueOf(file));
-        config.setProperty("last_file_path", String.valueOf(file));
+        (new XMLOpener(treeView)).open(file);
+        //reset last file path
+        lastFilePath = "xml/" + file.substring(file.lastIndexOf("\\") + 1);
+        config.setProperty("last_file_path", lastFilePath);
+        try {
+            config.store(
+                    new FileOutputStream("config/config.properties"),
+                    "auto-generated properties"
+            );
+        }catch (IOException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public void createTab(ActionEvent actionEvent) {
