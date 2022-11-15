@@ -14,14 +14,14 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 
 @SuppressWarnings("unchecked")
 public class LifeAchievementsController implements Initializable {
@@ -143,6 +143,11 @@ public class LifeAchievementsController implements Initializable {
     private final PseudoClass CATEGORY = PseudoClass.getPseudoClass("category");
     private final PseudoClass DONE = PseudoClass.getPseudoClass("done");
 
+    //config
+    private final String configPath = "src/main/resources/com/github/sunnyst4r/lifeachievements/config.properties";
+    private final Properties config = new Properties();
+    private String lastFilePath;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //add stylesheet to TreeView
@@ -152,8 +157,17 @@ public class LifeAchievementsController implements Initializable {
                         .toExternalForm()
         );
 
+        //set properties file
+        System.out.println(configPath);
+        try {
+            config.load(new FileInputStream(configPath));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        lastFilePath = config.getProperty("last_file_path");
+
         //load file that we saved before
-        (new XMLOpener(treeView)).open("xml/2.xml");
+        (new XMLOpener(treeView)).open(lastFilePath);
 
         //create context menu for treeView
         contextMenu.getItems().add(deleteItemContext);
@@ -441,7 +455,7 @@ public class LifeAchievementsController implements Initializable {
         }
     }
 
-    public void saveXMLFile() {
+    public void saveAsXMLFile() {
         //Creating a File chooser
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save File");
@@ -452,6 +466,10 @@ public class LifeAchievementsController implements Initializable {
         (new XMLSaver(treeView)).save(String.valueOf(fileChooser.showSaveDialog(new Stage())));
     }
 
+    public void saveXMLFile(){
+        (new XMLSaver(treeView)).save(config.getProperty("last_file_path"));
+    }
+
     public void openXMLFile() {
         //Creating a File chooser
         FileChooser fileChooser = new FileChooser();
@@ -460,12 +478,21 @@ public class LifeAchievementsController implements Initializable {
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("XML", "*.xml"));
 
         //open xml file as TreeView
-        (new XMLOpener(treeView)).open(String.valueOf(fileChooser.showOpenDialog(new Stage())));
+        String file = String.valueOf(fileChooser.showOpenDialog(new Stage()));
+        (new XMLOpener(treeView)).open(file);
         clearAndDisableAll();
+        //reset last file path
+        lastFilePath = "xml/" + file.substring(file.lastIndexOf("\\") + 1);
+        config.setProperty("last_file_path", lastFilePath);
+        try {
+            config.store(new FileOutputStream(configPath), "auto-generated properties");
+        }catch (IOException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public void createNewFile(){
-        //creating an empty file
+        //creating an empty TreeView
         TreeView<Category> newTreeView = new TreeView<>();
         TreeItem<Category> newRoot = new TreeItem<>(new Category("Ачивки"));
         newTreeView.setRoot(newRoot);
@@ -482,6 +509,7 @@ public class LifeAchievementsController implements Initializable {
         (new XMLSaver(newTreeView)).save(String.valueOf(file));
         clearAndDisableAll();
         (new XMLOpener(treeView)).open(String.valueOf(file));
+        config.setProperty("last_file_path", String.valueOf(file));
     }
 
     public void createTab(ActionEvent actionEvent) {

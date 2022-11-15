@@ -30,6 +30,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#createNewFile" text="New File" />
                   <MenuItem mnemonicParsing="false" onAction="#openXMLFile" text="Open" />
                   <MenuItem mnemonicParsing="false" onAction="#saveXMLFile" text="Save" />
+                  <MenuItem mnemonicParsing="false" onAction="#saveAsXMLFile" text="Save As" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="New item">

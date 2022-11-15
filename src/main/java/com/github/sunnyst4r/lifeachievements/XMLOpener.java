@@ -15,50 +15,80 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Properties;
 
 public class XMLOpener {
     private final TreeView<Category> treeView;
+
+    //config
+    private final String configPath = "src/main/resources/com/github/sunnyst4r/lifeachievements/config.properties";
+    private final Properties config = new Properties();
 
     public XMLOpener(TreeView<Category> treeView){
         this.treeView = treeView;
     }
 
-    public void open(String xml){
+    public void open(String xml) {
         //open file.xml with path (String xml)
 
-        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-        try{
-            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-            Document dom = documentBuilder.parse(new File(xml));
-            dom.getDocumentElement().normalize();
-            //get root element from document
-            Element rootElement = dom.getDocumentElement();
-            //create root TreeItem with Category constructor
-            TreeItem<Category> root = new TreeItem<>(new Category(rootElement.getAttribute("name")));
-
-            NodeList nodeList = rootElement.getChildNodes();
-            //iterate every elements in root
-            for(int i=0; i<nodeList.getLength(); i++){
-                Node node = nodeList.item(i);
-                //every second element is not Node.ELEMENT_NODE
-                //because of this index = (i+1)/2
-                if(node.getNodeType() == Node.ELEMENT_NODE){
-                    Element element = (Element) node;
-                    addTreeItem(element, root, String.valueOf(((i+1)/2)));
-                }
-            }
-            //set root into treeView from gui
-            treeView.setRoot(root);
-            treeView.setShowRoot(false);
-            root.setExpanded(true);
-
-        }catch (ParserConfigurationException | SAXException | IOException | ParseException e){
+        //initialize properties file
+        try {
+            config.load(new FileInputStream(configPath));
+        }catch (IOException e){
             System.out.println(e.getMessage());
+        }
+        if(xml.equals("")){
+            //creating an empty TreeView
+            TreeView<Category> newTreeView = new TreeView<>();
+            TreeItem<Category> newRoot = new TreeItem<>(new Category("Ачивки"));
+            newTreeView.setRoot(newRoot);
+            newTreeView.setShowRoot(false);
+            newRoot.setExpanded(true);
+
+            //save TreeView as xml file
+            String path = "xml/" + Calendar.getInstance().getTime().getTime() + ".xml";
+            config.setProperty("last_file_path", path);
+            try {
+                config.store(new FileOutputStream(configPath), "auto-generated properties");
+            }catch (IOException e){
+                System.out.println(e.getMessage());
+            }
+            (new XMLSaver(newTreeView)).save(path);
+            (new XMLOpener(treeView)).open(path);
+        }else{
+            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            try{
+                DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+                Document dom = documentBuilder.parse(new File(xml));
+                dom.getDocumentElement().normalize();
+                //get root element from document
+                Element rootElement = dom.getDocumentElement();
+                //create root TreeItem with Category constructor
+                TreeItem<Category> root = new TreeItem<>(new Category(rootElement.getAttribute("name")));
+
+                NodeList nodeList = rootElement.getChildNodes();
+                //iterate every elements in root
+                for(int i=0; i<nodeList.getLength(); i++){
+                    Node node = nodeList.item(i);
+                    //every second element is not Node.ELEMENT_NODE
+                    //because of this index = (i+1)/2
+                    if(node.getNodeType() == Node.ELEMENT_NODE){
+                        Element element = (Element) node;
+                        addTreeItem(element, root, String.valueOf(((i+1)/2)));
+                    }
+                }
+                //set root into treeView from gui
+                treeView.setRoot(root);
+                treeView.setShowRoot(false);
+                root.setExpanded(true);
+
+            }catch (ParserConfigurationException | SAXException | IOException | ParseException e){
+                System.out.println(e.getMessage());
+            }
         }
     }
 
