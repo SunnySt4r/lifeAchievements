@@ -90,6 +90,12 @@ public class LifeAchievementsController implements Initializable {
     private Label countAchievements;
     @FXML
     private ProgressBar progressCategory;
+    @FXML
+    private Label categoryIndex;
+    @FXML
+    private Button categoryUpButton;
+    @FXML
+    private Button categoryDownButton;
 
     //get all components of achievement info
     @FXML
@@ -106,6 +112,12 @@ public class LifeAchievementsController implements Initializable {
     private Label finishDateAchievementInfo;
     @FXML
     private TextArea achievementDescriptionInfo;
+    @FXML
+    private Label achievementIndex;
+    @FXML
+    private Button achievementUpButton;
+    @FXML
+    private Button achievementDownButton;
 
     //get all components of challenge info
     @FXML
@@ -130,6 +142,12 @@ public class LifeAchievementsController implements Initializable {
     private Label lastRecord;
     @FXML
     private Button failButton;
+    @FXML
+    private Label challengeIndex;
+    @FXML
+    private Button challengeUpButton;
+    @FXML
+    private Button challengeDownButton;
 
     //context menu and its items
     private final ContextMenu contextMenu = new ContextMenu();
@@ -330,7 +348,18 @@ public class LifeAchievementsController implements Initializable {
             //change information tabs Achievement, Challenge or Category
             createTab(new ActionEvent());
             if(item.getValue() instanceof Challenge challenge){
+                //set name
                 challengeNameInfo.setText(challenge.getName());
+                //set index
+                challengeIndex.setText(String.valueOf(item.getParent().getChildren().indexOf(item) + 1));
+                //disable up or down button
+                challengeDownButton.setDisable(false);
+                challengeUpButton.setDisable(false);
+                if(item.getParent().getChildren().indexOf(item) == 0){
+                    challengeUpButton.setDisable(true);
+                }else if(item.getParent().getChildren().indexOf(item) == item.getParent().getChildren().size() - 1){
+                    challengeDownButton.setDisable(true);
+                }
                 //set progress bar
                 progressChallenge.setProgress(
                         challenge.getCurrentStreak() / (float) challenge.getDistance()
@@ -364,8 +393,21 @@ public class LifeAchievementsController implements Initializable {
                 lastRecord.setText(String.valueOf(challenge.getRecord()));
 
             }else if(item.getValue() instanceof Achievement achievement){
+                //set name
                 achievementNameInfo.setText(achievement.getName());
+                //set checkBox true if achievement is done
                 isDoneAchievement.setSelected(achievement.isDone());
+                //set index
+                achievementIndex.setText(String.valueOf(item.getParent().getChildren().indexOf(item) + 1));
+                //disable up or down button
+                achievementDownButton.setDisable(false);
+                achievementUpButton.setDisable(false);
+                if(item.getParent().getChildren().indexOf(item) == 0){
+                    achievementUpButton.setDisable(true);
+                }else if(item.getParent().getChildren().indexOf(item) == item.getParent().getChildren().size() - 1){
+                    achievementDownButton.setDisable(true);
+                }
+                //set progress bar
                 progressAchievement.setProgress(achievement.isDone()? 1:0);
                 //set creation date
                 creationDateAchievementInfo.setText(String.valueOf(
@@ -389,9 +431,22 @@ public class LifeAchievementsController implements Initializable {
                     finishDateAchievementInfo.setText("(нет)");
                 }
             }else{
-                int size = countChildren(item, false);
+                //set name
                 categoryNameInfo.setText(item.getValue().toString());
+                //set index
+                categoryIndex.setText(String.valueOf(item.getParent().getChildren().indexOf(item) + 1));
+                //disable up or down button
+                categoryDownButton.setDisable(false);
+                categoryUpButton.setDisable(false);
+                if(item.getParent().getChildren().indexOf(item) == 0){
+                    categoryUpButton.setDisable(true);
+                }else if(item.getParent().getChildren().indexOf(item) == item.getParent().getChildren().size() - 1){
+                    categoryDownButton.setDisable(true);
+                }
+                //set number of inner achievement or challenge
+                int size = countChildren(item, false);
                 countAchievements.setText(String.valueOf(size));
+                //set progress bar
                 progressCategory.setProgress(
                         countChildren(item, true) / (float) countChildren(item, false)
                 );
@@ -749,5 +804,22 @@ public class LifeAchievementsController implements Initializable {
             challenge.fail();
             selectItem();
         }
+    }
+
+    public void changeIndexOfItem(ActionEvent actionEvent) {
+        //get selected item and its parent
+        TreeItem<Category> item = treeView.getSelectionModel().getSelectedItem();
+        TreeItem<Category> parent = item.getParent();
+        int index = parent.getChildren().indexOf(item);
+        //change position of item
+        if(((Button) actionEvent.getSource()).getId().equals("up")){
+            Collections.swap(parent.getChildren(), index, index - 1);
+        }else{
+            Collections.swap(parent.getChildren(), index, index + 1);
+        }
+        //reselect item
+        treeView.getSelectionModel().select(item);
+        selectItem();
+        renameLabel(treeView.getRoot(), "");
     }
 }

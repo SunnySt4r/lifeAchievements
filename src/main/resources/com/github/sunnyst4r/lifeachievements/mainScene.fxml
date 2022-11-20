@@ -96,6 +96,21 @@
                                        </font>
                                     </Label>
                                     <TextField fx:id="categoryNameInfo" layoutX="92.0" layoutY="74.0" AnchorPane.leftAnchor="92.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="76.0" />
+                                    <Button id="up" fx:id="categoryUpButton" layoutX="160.0" mnemonicParsing="false" onAction="#changeIndexOfItem" prefHeight="32.0" prefWidth="32.0" style="-fx-alignment: center; -fx-padding: 0;" text="↑" AnchorPane.rightAnchor="81.0" AnchorPane.topAnchor="0.0">
+                                       <font>
+                                          <Font size="21.0" />
+                                       </font>
+                                    </Button>
+                                    <Button id="down" fx:id="categoryDownButton" layoutX="235.0" mnemonicParsing="false" onAction="#changeIndexOfItem" prefHeight="32.0" prefWidth="32.0" style="-fx-alignment: center; -fx-padding: 0;" text="↓" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="0.0">
+                                       <font>
+                                          <Font size="21.0" />
+                                       </font>
+                                    </Button>
+                                    <Label fx:id="categoryIndex" layoutX="206.0" layoutY="4.0" prefHeight="26.0" prefWidth="35.0" style="-fx-alignment: center;" text="0" AnchorPane.rightAnchor="46.0" AnchorPane.topAnchor="4.0">
+                                       <font>
+                                          <Font size="17.0" />
+                                       </font>
+                                    </Label>
                                  </children>
                               </AnchorPane>
                            </content>
@@ -109,7 +124,7 @@
                                           <Font size="15.0" />
                                        </font>
                                     </Label>
-                                    <CheckBox onAction="#doneAchievement" fx:id="isDoneAchievement" layoutX="14.0" layoutY="173.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="245.0" text="Завершить выполнение" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="173.0">
+                                    <CheckBox fx:id="isDoneAchievement" layoutX="14.0" layoutY="173.0" mnemonicParsing="false" onAction="#doneAchievement" prefHeight="30.0" prefWidth="245.0" text="Завершить выполнение" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="173.0">
                                        <font>
                                           <Font size="15.0" />
                                        </font>
@@ -158,6 +173,21 @@
                                        </font>
                                     </Label>
                                     <TextArea fx:id="achievementDescriptionInfo" layoutX="14.0" layoutY="264.0" prefHeight="283.0" prefWidth="245.0" promptText="(нет)" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="264.0" />
+                                    <Button id="up" fx:id="achievementUpButton" layoutX="137.0" layoutY="1.0" mnemonicParsing="false" onAction="#changeIndexOfItem" prefHeight="32.0" prefWidth="32.0" style="-fx-alignment: center; -fx-padding: 0;" text="↑" AnchorPane.rightAnchor="81.0" AnchorPane.topAnchor="0.0">
+                                       <font>
+                                          <Font size="21.0" />
+                                       </font>
+                                    </Button>
+                                    <Button id="down" fx:id="achievementDownButton" layoutX="218.0" layoutY="1.0" mnemonicParsing="false" onAction="#changeIndexOfItem" prefHeight="32.0" prefWidth="32.0" style="-fx-alignment: center; -fx-padding: 0;" text="↓" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="0.0">
+                                       <font>
+                                          <Font size="21.0" />
+                                       </font>
+                                    </Button>
+                                    <Label fx:id="achievementIndex" layoutX="183.0" layoutY="4.0" prefHeight="26.0" prefWidth="35.0" style="-fx-alignment: center;" text="0" AnchorPane.rightAnchor="46.0" AnchorPane.topAnchor="4.0">
+                                       <font>
+                                          <Font size="17.0" />
+                                       </font>
+                                    </Label>
                                  </children>
                               </AnchorPane>
                            </content>
@@ -215,7 +245,7 @@
                                        </font>
                                     </Label>
                                     <TextArea fx:id="challengeDescriptionInfo" layoutX="12.0" layoutY="329.0" prefHeight="182.0" prefWidth="249.0" promptText="(нет)" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="329.0" />
-                                    <Button onAction="#changeChallengeProgress" fx:id="minusButton" layoutX="92.0" layoutY="190.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" text="-" AnchorPane.leftAnchor="92.0" AnchorPane.topAnchor="190.0">
+                                    <Button fx:id="minusButton" layoutX="92.0" layoutY="190.0" mnemonicParsing="false" onAction="#changeChallengeProgress" prefHeight="35.0" prefWidth="35.0" text="-" AnchorPane.leftAnchor="92.0" AnchorPane.topAnchor="190.0">
                                        <font>
                                           <Font size="15.0" />
                                        </font>
@@ -231,7 +261,7 @@
                                        </font>
                                     </Label>
                                     <Separator layoutY="172.0" prefHeight="25.0" prefWidth="273.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="172.0" />
-                                    <Button onAction="#changeChallengeProgress" fx:id="plusButton" layoutX="228.0" layoutY="190.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" text="+" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="190.0">
+                                    <Button fx:id="plusButton" layoutX="228.0" layoutY="190.0" mnemonicParsing="false" onAction="#changeChallengeProgress" prefHeight="35.0" prefWidth="35.0" text="+" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="190.0">
                                        <font>
                                           <Font size="15.0" />
                                        </font>
@@ -246,7 +276,22 @@
                                           <Font size="15.0" />
                                        </font>
                                     </Label>
-                                    <Button onAction="#failChallenge" fx:id="failButton" layoutX="16.0" layoutY="527.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="244.0" text="Провал((" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+                                    <Button fx:id="failButton" layoutX="16.0" layoutY="527.0" mnemonicParsing="false" onAction="#failChallenge" prefHeight="25.0" prefWidth="244.0" text="Провал((" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+                                    <Button id="up" fx:id="challengeUpButton" layoutX="158.0" layoutY="1.0" mnemonicParsing="false" onAction="#changeIndexOfItem" prefHeight="32.0" prefWidth="32.0" style="-fx-alignment: center; -fx-padding: 0;" text="↑" AnchorPane.rightAnchor="81.0" AnchorPane.topAnchor="0.0">
+                                       <font>
+                                          <Font size="21.0" />
+                                       </font>
+                                    </Button>
+                                    <Button id="down" fx:id="challengeDownButton" layoutX="121.0" layoutY="1.0" mnemonicParsing="false" onAction="#changeIndexOfItem" prefHeight="32.0" prefWidth="32.0" style="-fx-alignment: center; -fx-padding: 0;" text="↓" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="0.0">
+                                       <font>
+                                          <Font size="21.0" />
+                                       </font>
+                                    </Button>
+                                    <Label fx:id="challengeIndex" layoutX="197.0" layoutY="4.0" prefHeight="26.0" prefWidth="35.0" style="-fx-alignment: center;" text="0" AnchorPane.rightAnchor="46.0" AnchorPane.topAnchor="4.0">
+                                       <font>
+                                          <Font size="17.0" />
+                                       </font>
+                                    </Label>
                                  </children>
                               </AnchorPane>
                           </content>
