@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Category name="Ачивки">
+    <Achievement creationDate="1666906256795" description="" done="0" endingDate="0" finish="0" name="Поделать домашку"/>
+    <Achievement creationDate="1666906264030" description="" done="1" endingDate="0" finish="1668497427266" name="Пописать код"/>
+    <Achievement creationDate="1666906261805" description="" done="1" endingDate="0" finish="1668173209359" name="Позаниматься"/>
     <Category name="Книги">
         <Category name="Что-то важное">
             <Category name="Книги художественные">
@@ -23,7 +26,4 @@
         <Achievement creationDate="1666906239331" description="" done="0" endingDate="0" finish="0" name="написать программу"/>
         <Achievement creationDate="1666906262956" description="" done="0" endingDate="0" finish="0" name="Сделать оригами"/>
     </Category>
-    <Achievement creationDate="1666906256795" description="" done="0" endingDate="0" finish="0" name="Поделать домашку"/>
-    <Achievement creationDate="1666906264030" description="" done="1" endingDate="0" finish="1668497427266" name="Пописать код"/>
-    <Achievement creationDate="1666906261805" description="" done="1" endingDate="0" finish="1668173209359" name="Позаниматься"/>
 </Category>

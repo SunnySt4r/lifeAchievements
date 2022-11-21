@@ -305,7 +305,7 @@ public class LifeAchievementsController implements Initializable {
             target.getStyleClass().remove("tree-cell-on-drag-entered-false");
             target.getStyleClass().remove("tree-cell-on-drag-entered-true");
 
-            if(target.getTreeItem().getValue() != null){
+            if(target.getTreeItem() != null && target.getTreeItem().getValue() != null){
                 target.pseudoClassStateChanged(CATEGORY, !(target.getTreeItem().getValue() instanceof Achievement));
                 if(target.getTreeItem().getValue() instanceof Achievement achievement){
                     target.pseudoClassStateChanged(DONE, achievement.isDone());
