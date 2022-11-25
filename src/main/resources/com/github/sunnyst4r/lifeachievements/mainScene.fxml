@@ -57,11 +57,6 @@
                               </AnchorPane>
                            </content>
                         </Tab>
-                        <Tab text="DONE">
-                           <content>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="448.0" prefWidth="548.0" />
-                           </content>
-                        </Tab>
                      </tabs>
                   </TabPane>
                </children>
