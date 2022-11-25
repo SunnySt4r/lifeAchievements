@@ -357,7 +357,8 @@ public class LifeAchievementsController implements Initializable {
                 challengeUpButton.setDisable(false);
                 if(item.getParent().getChildren().indexOf(item) == 0){
                     challengeUpButton.setDisable(true);
-                }else if(item.getParent().getChildren().indexOf(item) == item.getParent().getChildren().size() - 1){
+                }
+                if(item.getParent().getChildren().indexOf(item) == item.getParent().getChildren().size() - 1){
                     challengeDownButton.setDisable(true);
                 }
                 //set progress bar
@@ -404,7 +405,8 @@ public class LifeAchievementsController implements Initializable {
                 achievementUpButton.setDisable(false);
                 if(item.getParent().getChildren().indexOf(item) == 0){
                     achievementUpButton.setDisable(true);
-                }else if(item.getParent().getChildren().indexOf(item) == item.getParent().getChildren().size() - 1){
+                }
+                if(item.getParent().getChildren().indexOf(item) == item.getParent().getChildren().size() - 1){
                     achievementDownButton.setDisable(true);
                 }
                 //set progress bar
@@ -440,7 +442,8 @@ public class LifeAchievementsController implements Initializable {
                 categoryUpButton.setDisable(false);
                 if(item.getParent().getChildren().indexOf(item) == 0){
                     categoryUpButton.setDisable(true);
-                }else if(item.getParent().getChildren().indexOf(item) == item.getParent().getChildren().size() - 1){
+                }
+                if(item.getParent().getChildren().indexOf(item) == item.getParent().getChildren().size() - 1){
                     categoryDownButton.setDisable(true);
                 }
                 //set number of inner achievement or challenge

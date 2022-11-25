@@ -8,16 +8,16 @@
             <Category name="Книги художественные">
                 <Achievement creationDate="1666906260226" description="" done="0" endingDate="0" finish="0" name="Съесть мармеладки"/>
                 <Challenge attempt="1" creationDate="1666906239331" currentStreak="31" description="" distance="100" done="0" endingDate="0" finish="0" name="челендж 1" record="0"/>
-                <Achievement creationDate="1666906263461" description="" done="1" endingDate="0" finish="1668497421846" name="Покушать"/>
                 <Achievement creationDate="1666906259078" description="" done="0" endingDate="0" finish="0" name="Позаниматься"/>
-                <Achievement creationDate="1666906257394" description="" done="0" endingDate="0" finish="0" name="Сделать оригами"/>
                 <Achievement creationDate="1666906264766" description="" done="1" endingDate="0" finish="1668497428927" name="Съесть мармеладки"/>
+                <Achievement creationDate="1666906257394" description="" done="0" endingDate="0" finish="0" name="Сделать оригами"/>
                 <Achievement creationDate="1666906262420" description="" done="0" endingDate="0" finish="0" name="Съесть мармеладки"/>
                 <Achievement creationDate="1666906258531" description="" done="0" endingDate="0" finish="0" name="Поделать домашку"/>
                 <Achievement creationDate="1666906239308" description="" done="0" endingDate="0" finish="0" name="сделать дела"/>
+                <Achievement creationDate="1666906263461" description="" done="1" endingDate="0" finish="1668497421846" name="Покушать"/>
             </Category>
-            <Achievement creationDate="1666906255525" description="" done="0" endingDate="0" finish="0" name="Позаниматься"/>
             <Achievement creationDate="1666906259658" description="" done="0" endingDate="0" finish="0" name="Сделать оригами"/>
+            <Achievement creationDate="1666906255525" description="" done="0" endingDate="0" finish="0" name="Позаниматься"/>
             <Achievement creationDate="1666906260781" description="" done="1" endingDate="0" finish="1668497423251" name="Сделать оригами"/>
             <Achievement creationDate="1666906256233" description="" done="0" endingDate="0" finish="0" name="Позаниматься"/>
             <Achievement creationDate="1666906257957" description="" done="0" endingDate="0" finish="0" name="Сделать оригами"/>
