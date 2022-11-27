@@ -825,4 +825,16 @@ public class LifeAchievementsController implements Initializable {
         selectItem();
         renameLabel(treeView.getRoot(), "");
     }
+
+    public void changeName(KeyEvent event) {
+        TreeItem<Category> item = treeView.getSelectionModel().getSelectedItem();
+        item.getValue().setName(((TextField) event.getSource()).getText());
+        treeView.refresh();
+    }
+
+    public void changeDescription(KeyEvent event) {
+        Achievement item = (Achievement) treeView.getSelectionModel().getSelectedItem().getValue();
+        item.setDescription(((TextArea) event.getSource()).getText());
+        treeView.refresh();
+    }
 }

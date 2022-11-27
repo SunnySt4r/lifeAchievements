@@ -90,7 +90,7 @@
                                           <Font size="15.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="categoryNameInfo" layoutX="92.0" layoutY="74.0" AnchorPane.leftAnchor="92.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="76.0" />
+                                    <TextField fx:id="categoryNameInfo" layoutX="92.0" layoutY="74.0" onKeyReleased="#changeName" AnchorPane.leftAnchor="92.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="76.0" />
                                     <Button id="up" fx:id="categoryUpButton" layoutX="160.0" mnemonicParsing="false" onAction="#changeIndexOfItem" prefHeight="32.0" prefWidth="32.0" style="-fx-alignment: center; -fx-padding: 0;" text="↑" AnchorPane.rightAnchor="81.0" AnchorPane.topAnchor="0.0">
                                        <font>
                                           <Font size="21.0" />
@@ -130,7 +130,7 @@
                                           <Font size="15.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="achievementNameInfo" layoutX="92.0" layoutY="74.0" prefHeight="25.0" prefWidth="170.0" AnchorPane.leftAnchor="92.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="76.0" />
+                                    <TextField fx:id="achievementNameInfo" layoutX="92.0" layoutY="74.0" onKeyReleased="#changeName" prefHeight="25.0" prefWidth="170.0" AnchorPane.leftAnchor="92.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="76.0" />
                                     <Label layoutX="14.0" layoutY="110.0" text="Создано:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="110.0">
                                        <font>
                                           <Font size="15.0" />
@@ -167,7 +167,7 @@
                                           <Font size="15.0" />
                                        </font>
                                     </Label>
-                                    <TextArea fx:id="achievementDescriptionInfo" layoutX="14.0" layoutY="264.0" prefHeight="283.0" prefWidth="245.0" promptText="(нет)" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="264.0" />
+                                    <TextArea onKeyReleased="#changeDescription" fx:id="achievementDescriptionInfo" layoutX="14.0" layoutY="264.0" prefHeight="283.0" prefWidth="245.0" promptText="(нет)" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="264.0" />
                                     <Button id="up" fx:id="achievementUpButton" layoutX="137.0" layoutY="1.0" mnemonicParsing="false" onAction="#changeIndexOfItem" prefHeight="32.0" prefWidth="32.0" style="-fx-alignment: center; -fx-padding: 0;" text="↑" AnchorPane.rightAnchor="81.0" AnchorPane.topAnchor="0.0">
                                        <font>
                                           <Font size="21.0" />
@@ -202,7 +202,7 @@
                                           <Font size="15.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="challengeNameInfo" layoutX="92.0" layoutY="76.0" prefHeight="25.0" prefWidth="170.0" AnchorPane.leftAnchor="92.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="76.0" />
+                                    <TextField fx:id="challengeNameInfo" layoutX="92.0" layoutY="76.0" onKeyReleased="#changeName" prefHeight="25.0" prefWidth="170.0" AnchorPane.leftAnchor="92.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="76.0" />
                                     <Label layoutX="16.0" layoutY="125.0" text="Создано:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="110.0">
                                        <font>
                                           <Font size="15.0" />
@@ -239,7 +239,7 @@
                                           <Font size="15.0" />
                                        </font>
                                     </Label>
-                                    <TextArea fx:id="challengeDescriptionInfo" layoutX="12.0" layoutY="329.0" prefHeight="182.0" prefWidth="249.0" promptText="(нет)" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="329.0" />
+                                    <TextArea onKeyReleased="#changeDescription" fx:id="challengeDescriptionInfo" layoutX="12.0" layoutY="329.0" prefHeight="182.0" prefWidth="249.0" promptText="(нет)" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="329.0" />
                                     <Button fx:id="minusButton" layoutX="92.0" layoutY="190.0" mnemonicParsing="false" onAction="#changeChallengeProgress" prefHeight="35.0" prefWidth="35.0" text="-" AnchorPane.leftAnchor="92.0" AnchorPane.topAnchor="190.0">
                                        <font>
                                           <Font size="15.0" />
