@@ -23,7 +23,7 @@ import java.util.*;
 @SuppressWarnings("unchecked")
 public class LifeAchievementsController implements Initializable {
     @FXML
-    public TabPane informationTabPane;
+    private TabPane informationTabPane;
     @FXML
     private TreeView<Category> treeView;
     private TreeCell<Category> source;
@@ -778,11 +778,11 @@ public class LifeAchievementsController implements Initializable {
         Challenge challenge = (Challenge) treeView.getSelectionModel().getSelectedItem().getValue();
         if(actionEvent.getSource().equals(minusButton)){
             if(challenge.getCurrentStreak() > 0){
-                challenge.pass(-1);
+                challenge.addPoint(-1);
             }
         }else if(actionEvent.getSource().equals(plusButton)){
             if(challenge.getCurrentStreak()<challenge.getDistance()){
-                challenge.pass(1);
+                challenge.addPoint(1);
             }
         }
         selectItem();

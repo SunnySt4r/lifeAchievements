@@ -76,25 +76,60 @@ public class Challenge extends Achievement{
 
     public void fail(){
         attempt++;
-        if(record < currentStreak){
+        setRecord();
+        resetStartingSetting();
+        sendNotification();
+    }
+
+    private void setRecord() {
+        if (record < currentStreak) {
             record = currentStreak;
-        }
-        currentStreak = 0;
-        start = new Date();
-        Calendar c = Calendar.getInstance();
-        c.setTime(start);
-        c.add(Calendar.DATE, distance);
-        if(getEndingDate() != null && c.getTime().after(getEndingDate())){
-            System.out.println("Вы не сможете уложиться до конечного дня.\n Переставить конечный день?");
         }
     }
 
-    public void pass(int step){
+    private void resetStartingSetting(){
+        currentStreak = 0;
+        start = new Date();
+    }
+
+    private void sendNotification(){
+        if(getEndingDate() != null && canDoItOnTime()){
+            System.out.println("Вы не сможете уложиться до конечного дня.\n Переставить конечный день?");
+        }
+    }
+    private boolean canDoItOnTime(){
+        Calendar calendarWithExpectedEndingDate = createCalendarWithExpectedEndingDate(start);
+        return calendarWithExpectedEndingDate.getTime().after(getEndingDate());
+    }
+
+    private Calendar createCalendarWithExpectedEndingDate(Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, distance);
+        return calendar;
+    }
+
+    public void addPoint(int step){
         currentStreak += step;
+        checkPositiveStep(step);
+    }
+
+    private void checkPositiveStep(int step){
+        if(step > 0){
+            tryToFinish();
+        }else{
+            tryToStepDown();
+        }
+    }
+
+    private void tryToFinish(){
         if(currentStreak == distance){
             this.iAmDone();
         }
-        if(step<0 && distance-currentStreak==1){
+    }
+
+    private void tryToStepDown(){
+        if(distance-currentStreak==1){
             setFinish(null);
             setDone(false);
         }

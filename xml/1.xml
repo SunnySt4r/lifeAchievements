@@ -26,4 +26,7 @@
         <Achievement creationDate="1666906239331" description="" done="0" endingDate="0" finish="0" name="написать программу"/>
         <Achievement creationDate="1666906262956" description="" done="0" endingDate="0" finish="0" name="Сделать оригами"/>
     </Category>
+    <Category name="dfsdfsdfdsf">
+        <Challenge attempt="8" creationDate="1673127568652" currentStreak="0" description="" distance="5" done="0" endingDate="0" finish="0" name="fgdfgfdgfd" record="0"/>
+    </Category>
 </Category>
